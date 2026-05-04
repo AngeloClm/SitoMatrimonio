@@ -223,48 +223,48 @@ export default function Home() {
           
           <div className="grid md:grid-cols-2 gap-12">
             {/* Upload Photos */}
-            <div className="bg-white p-8 rounded-xl shadow-lg">
+            <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center justify-center">
               <h3 className="text-2xl font-playfair text-rose-700 mb-6 font-semibold text-center">Condividi le tue foto!</h3>
-              <p className="text-gray-700 mb-6 text-center">
-                Rendiamo felice la nostra coppia insieme! Carica le foto durante il giorno del matrimonio o successivamente.
+              <p className="text-gray-700 mb-8 text-center">
+                Carica le tue foto direttamente nella nostra cartella condivisa su Google Drive. Puoi caricare quante foto vuoi!
               </p>
-              
-              <div className="border-2 border-dashed border-rose-300 p-8 text-center rounded-lg mb-4">
-                <p className="text-gray-600 mb-4">Trascina qui le tue foto o clicca per selezionare</p>
-                <button className="bg-rose-600 text-white px-6 py-3 rounded-lg hover:bg-rose-700 transition-colors">
-                  Carica Foto
-                </button>
-              </div>
-              
-              <p className="text-sm text-gray-500 text-center">
-                Limite: 30 foto. Dimensione massima: 20MB per foto.
-              </p>
-              
-              <div className="mt-6 text-center">
-                <p className="text-gray-700 mb-2">Usa l'hashtag sui social:</p>
+
+              <a
+                href="https://drive.google.com/drive/folders/1vaGSLehlJtpbMi49WmuZJo4kRoGgYhPo?usp=drive_link"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-rose-600 text-white px-8 py-4 rounded-xl hover:bg-rose-700 transition-colors font-semibold text-lg shadow-md"
+              >
+                <span className="text-2xl">📁</span>
+                Carica le tue foto
+              </a>
+
+              <div className="mt-8 text-center">
+                <p className="text-gray-700 mb-2">Usa l&apos;hashtag sui social:</p>
                 <span className="bg-rose-100 text-rose-700 px-4 py-2 rounded-full font-semibold">#AngeloEGiovanna2026</span>
               </div>
             </div>
             
             {/* QR Code */}
             <div className="bg-white p-8 rounded-xl shadow-lg text-center">
-              <h3 className="text-2xl font-playfair text-rose-700 mb-6 font-semibold">Condividi con il QR Code!</h3>
+              <h3 className="text-2xl font-playfair text-rose-700 mb-6 font-semibold">Scansiona il QR Code!</h3>
               <p className="text-gray-700 mb-8">
-                Utilizza questo codice QR per consentire agli ospiti di condividere con voi i momenti del matrimonio! 
-                Tutto ciò che devono fare è puntare la fotocamera del telefono sul codice QR.
+                Punta la fotocamera del telefono sul codice QR per accedere direttamente alla cartella e caricare le tue foto!
               </p>
               
-              <div className="bg-gray-100 p-8 rounded-lg">
-                <div className="w-48 h-48 bg-white mx-auto border-2 border-gray-300 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-6xl mb-4">📱</div>
-                    <p className="text-sm text-gray-600">QR Code per<br/>upload foto</p>
-                  </div>
-                </div>
+              <div className="bg-gray-100 p-6 rounded-lg flex justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://drive.google.com/drive/folders/1vaGSLehlJtpbMi49WmuZJo4kRoGgYhPo%3Fusp%3Ddrive_link"
+                  alt="QR Code cartella Google Drive"
+                  width={200}
+                  height={200}
+                  className="rounded-lg"
+                />
               </div>
               
               <p className="text-sm text-gray-500 mt-4">
-                Il QR Code sarà disponibile prima del matrimonio
+                📸 Scansiona e carica le tue foto!
               </p>
             </div>
           </div>
