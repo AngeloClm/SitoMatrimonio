@@ -85,18 +85,15 @@ export default function Home() {
             </p>
             
             <p className="mb-6">
-              Da quella sera in poi, le nostre vite si sono intrecciate in un viaggio di scoperta. Insieme, abbiamo viaggiato, 
-              esplorato nuovi posti e condiviso momenti indimenticabili. A ogni passo, abbiamo imparato che casa non è un luogo, 
-              ma il modo in cui ci sentiamo l'uno in presenza dell'altro.
+             Da quel giorno, le nostre vite hanno iniziato a intrecciarsi in un viaggio lungo dodici anni. Abbiamo condiviso sogni, scoperto il mondo insieme, collezionato ricordi e imparato, passo dopo passo, che casa non è un luogo, ma il modo in cui ci sentiamo quando siamo l’uno accanto all’altra.
             </p>
             
             <p className="mb-6">
-              Oggi siamo più di una semplice coppia. Siamo migliori amici, anime gemelle e partner impavidi in questa 
-              bellissima avventura della vita. Ogni momento ci ha avvicinato e ora siamo pronti a iniziare il prossimo capitolo.
+              A dicembre 2025 abbiamo scelto di fare un passo in più, promettendoci un futuro ancora più grande. Oggi siamo più di una coppia: siamo migliori amici, complici, e partner in ogni avventura.
             </p>
             
             <p className="text-center text-xl font-playfair text-rose-700 font-semibold">
-              Non vediamo l'ora di celebrare il nostro amore con voi quando lo renderemo ufficiale! 💕
+             E ora, con il cuore pieno di tutto ciò che siamo stati e di tutto ciò che saremo, siamo pronti a iniziare il nostro prossimo capitolo: quello che, a settembre, ci porterà a dire “per sempre”.
             </p>
           </div>
         </div>
@@ -148,7 +145,7 @@ export default function Home() {
           
           <div className="bg-rose-50 p-8 rounded-xl">
             <p className="text-lg text-gray-700 mb-8 text-center">
-              Non vediamo l'ora di vedervi! Se porterai un ospite o hai specifiche restrizioni dietetiche, 
+              Non vediamo l'ora di vedervi! Se  hai specifiche restrizioni dietetiche, 
               assicurati che sia indicato di seguito. Si prega di rispondere entro il <strong>20 Giugno 2026</strong>
             </p>
             
