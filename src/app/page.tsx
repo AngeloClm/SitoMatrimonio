@@ -1,6 +1,191 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
+import emailjs from '@emailjs/browser';
+
+// Componente per il form RSVP
+function RSVPForm() {
+  const [formData, setFormData] = useState({
+    nome: '',
+    cognome: '',
+    partecipazione: '',
+    restrizioni: false,
+    restrizioniDettagli: '',
+    commenti: ''
+  });
+  
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // ⚠️ CONFIGURAZIONE EMAILJS - CONFIGURATO! ⚠️
+  const EMAIL_SERVICE_ID = 'service_68g1vam';
+  const EMAIL_TEMPLATE_ID = 'template_mzw4dmc';  
+  const EMAIL_PUBLIC_KEY = '_XhxSBeYC7vN8qz5_';
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setShowError(false);
+    
+    try {
+      // Prepara i dati per l'email
+      const templateParams = {
+        to_email: 'angeloclemente12@libero.it',
+        nome: formData.nome,
+        cognome: formData.cognome,
+        partecipazione: formData.partecipazione,
+        restrizioni: formData.restrizioni ? 'Sì' : 'No',
+        restrizioni_dettagli: formData.restrizioniDettagli || 'Nessuna',
+        commenti: formData.commenti || 'Nessun commento',
+        data_invio: new Date().toLocaleString('it-IT')
+      };
+      
+      // Invia email tramite EmailJS
+      await emailjs.send(
+        EMAIL_SERVICE_ID,
+        EMAIL_TEMPLATE_ID, 
+        templateParams,
+        EMAIL_PUBLIC_KEY
+      );
+      
+      // Mostra messaggio di successo
+      setShowSuccess(true);
+      
+      // Reset form
+      setFormData({
+        nome: '',
+        cognome: '',
+        partecipazione: '',
+        restrizioni: false,
+        restrizioniDettagli: '',
+        commenti: ''
+      });
+      
+      // Nascondi messaggio dopo 5 secondi
+      setTimeout(() => setShowSuccess(false), 5000);
+      
+    } catch (error) {
+      console.error('Errore invio RSVP:', error);
+      setShowError(true);
+      setTimeout(() => setShowError(false), 5000);
+    }
+    
+    setIsSubmitting(false);
+  };
+
+  return (
+    <div className="bg-rose-50 p-8 rounded-xl">
+      {showSuccess && (
+        <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+          ✅ Grazie! La tua RSVP è stata inviata via email con successo!
+        </div>
+      )}
+      
+      {showError && (
+        <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+          ❌ Errore nell'invio. Riprova tra qualche minuto o contattaci direttamente.
+        </div>
+      )}
+      
+      <p className="text-lg text-gray-700 mb-8 text-center">
+        Non vediamo l'ora di vedervi! Se hai specifiche restrizioni dietetiche, 
+        assicurati che sia indicato di seguito. Si prega di rispondere entro il <strong>20 Giugno 2026</strong>
+      </p>
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Nome *</label>
+            <input 
+              type="text" 
+              value={formData.nome}
+              onChange={(e) => setFormData({...formData, nome: e.target.value})}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-black" 
+              required 
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Cognome *</label>
+            <input 
+              type="text" 
+              value={formData.cognome}
+              onChange={(e) => setFormData({...formData, cognome: e.target.value})}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-black" 
+              required 
+            />
+          </div>
+        </div>
+        
+        <div>
+          <label className="block text-gray-700 font-medium mb-3">Parteciperete? *</label>
+          <div className="space-y-2">
+            {[
+              {value: 'ceremony', label: 'Solo cerimonia'},
+              {value: 'reception', label: 'Solo ricevimento'},
+              {value: 'both', label: 'Sì, cerimonia e ricevimento'},
+              {value: 'no', label: 'No'},
+              {value: 'maybe', label: 'Non sono ancora sicuro'}
+            ].map((option) => (
+              <label key={option.value} className="flex items-center">
+                <input 
+                  type="radio" 
+                  name="attendance" 
+                  value={option.value}
+                  checked={formData.partecipazione === option.value}
+                  onChange={(e) => setFormData({...formData, partecipazione: e.target.value})}
+                  className="mr-3" 
+                  required
+                />
+                <span className="text-black">{option.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+        
+        <div>
+          <label className="flex items-center mb-3">
+            <input 
+              type="checkbox" 
+              checked={formData.restrizioni}
+              onChange={(e) => setFormData({...formData, restrizioni: e.target.checked})}
+              className="mr-3" 
+            />
+            <span className="text-black">Avete delle restrizioni alimentari? (vegetariano, allergie, ecc.)</span>
+          </label>
+          {formData.restrizioni && (
+            <input 
+              type="text" 
+              placeholder="Specificare le restrizioni..."
+              value={formData.restrizioniDettagli}
+              onChange={(e) => setFormData({...formData, restrizioniDettagli: e.target.value})}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 mt-2 text-black" 
+            />
+          )}
+        </div>
+        
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Commenti o domande</label>
+          <textarea 
+            value={formData.commenti}
+            onChange={(e) => setFormData({...formData, commenti: e.target.value})}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-black" 
+            rows={4}
+          />
+        </div>
+        
+        <button 
+          type="submit" 
+          disabled={isSubmitting}
+          className="w-full bg-rose-600 text-white py-3 px-6 rounded-lg hover:bg-rose-700 transition-colors font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? 'Invio in corso...' : 'Invia RSVP'}
+        </button>
+      </form>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -142,77 +327,7 @@ export default function Home() {
       <section id="rsvp" className="py-20 px-4 bg-white">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl font-playfair text-center text-rose-800 mb-12 font-bold">RSVP</h2>
-          
-          <div className="bg-rose-50 p-8 rounded-xl">
-            <p className="text-lg text-gray-700 mb-8 text-center">
-              Non vediamo l'ora di vedervi! Se  hai specifiche restrizioni dietetiche, 
-              assicurati che sia indicato di seguito. Si prega di rispondere entro il <strong>20 Giugno 2026</strong>
-            </p>
-            
-            <form className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-gray-700 font-medium mb-2">Nome *</label>
-                  <input type="text" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500" required />
-                </div>
-                <div>
-                  <label className="block text-gray-700 font-medium mb-2">Cognome *</label>
-                  <input type="text" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500" required />
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-gray-700 font-medium mb-3">Parteciperete? *</label>
-                <div className="space-y-2">
-                  <label className="flex items-center">
-                    <input type="radio" name="attendance" value="ceremony" className="mr-3" />
-                    <span>Solo cerimonia</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input type="radio" name="attendance" value="reception" className="mr-3" />
-                    <span>Solo ricevimento</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input type="radio" name="attendance" value="both" className="mr-3" />
-                    <span>Sì, cerimonia e ricevimento</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input type="radio" name="attendance" value="no" className="mr-3" />
-                    <span>No</span>
-                  </label>
-                  <label className="flex items-center">
-                    <input type="radio" name="attendance" value="maybe" className="mr-3" />
-                    <span>Non sono ancora sicuro</span>
-                  </label>
-                </div>
-              </div>
-              
-              <div>
-                <label className="flex items-center mb-3">
-                  <input type="checkbox" className="mr-3" />
-                  <span className="text-gray-700">Avete delle restrizioni alimentari? (vegetariano, allergie, ecc.)</span>
-                </label>
-              </div>
-              
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Porterete un ospite?</label>
-                <div className="flex items-center space-x-4">
-                  <button type="button" className="bg-gray-200 text-gray-700 px-4 py-2 rounded">-</button>
-                  <span className="text-xl font-semibold">0</span>
-                  <button type="button" className="bg-rose-600 text-white px-4 py-2 rounded">+</button>
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Commenti o domande</label>
-                <textarea className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500" rows={4}></textarea>
-              </div>
-              
-              <button type="submit" className="w-full bg-rose-600 text-white py-3 px-6 rounded-lg hover:bg-rose-700 transition-colors font-semibold">
-                Invia RSVP
-              </button>
-            </form>
-          </div>
+          <RSVPForm />
         </div>
       </section>
 
