@@ -122,11 +122,8 @@ function RSVPForm() {
           <label className="block text-gray-700 font-medium mb-3">Parteciperete? *</label>
           <div className="space-y-2">
             {[
-              {value: 'ceremony', label: 'Solo cerimonia'},
-              {value: 'reception', label: 'Solo ricevimento'},
-              {value: 'both', label: 'Sì, cerimonia e ricevimento'},
-              {value: 'no', label: 'No'},
-              {value: 'maybe', label: 'Non sono ancora sicuro'}
+              {value: 'yes', label: 'Sì'},
+              {value: 'no', label: 'No'}
             ].map((option) => (
               <label key={option.value} className="flex items-center">
                 <input 
@@ -196,8 +193,8 @@ export default function Home() {
           <ul className="flex justify-center space-x-8 py-4">
             <li><a href="#matrimonio" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Matrimonio</a></li>
             <li><a href="#storia" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">La nostra storia</a></li>
-            <li><a href="#foto" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Foto</a></li>
             <li><a href="#rsvp" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">RSVP</a></li>
+            <li><a href="#foto" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Foto</a></li>
           </ul>
         </div>
       </nav>
@@ -211,16 +208,36 @@ export default function Home() {
             Angelo & Giovanna
           </h1>
           
-          {/* Hero Wedding Photo */}
-          <div className="mt-12 relative mx-auto max-w-md">
-            <Image
-              src="/Prima Foto Prova.jpeg"
-              alt="Angelo e Giovanna"
-              width={400}
-              height={500}
-              className="rounded-2xl shadow-2xl object-cover"
-              priority
-            />
+          {/* Hero Photo Collage */}
+          <div className="mt-12 relative mx-auto" style={{width: '420px', height: '500px'}}>
+            {/* Foto 1 - centro, leggermente ruotata a sinistra */}
+            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '220px', top: '30px', left: '50%', transform: 'translateX(-50%) rotate(-3deg)', zIndex: 5}}>
+              <Image src="/Prima Foto Prova.jpeg" alt="Angelo e Giovanna" width={200} height={250} className="object-cover w-full" style={{height: '200px'}} priority />
+            </div>
+            {/* Foto 2 - sinistra in alto */}
+            <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', top: '0px', left: '0px', transform: 'rotate(-6deg)', zIndex: 3}}>
+              <Image src="/Seconda Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+            </div>
+            {/* Foto 3 - destra in alto */}
+            <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', top: '10px', right: '0px', transform: 'rotate(5deg)', zIndex: 3}}>
+              <Image src="/Terza Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+            </div>
+            {/* Foto 4 - sinistra in basso */}
+            <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', bottom: '20px', left: '10px', transform: 'rotate(4deg)', zIndex: 4}}>
+              <Image src="/Quarta Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+            </div>
+            {/* Foto 5 - destra in basso */}
+            <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', bottom: '10px', right: '10px', transform: 'rotate(-5deg)', zIndex: 4}}>
+              <Image src="/QuintaFoto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+            </div>
+            {/* Foto 6 - centro basso */}
+            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '200px', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', zIndex: 6}}>
+              <Image src="/Sesta Foto.jpeg" alt="Angelo e Giovanna" width={180} height={220} className="object-cover w-full" style={{height: '185px'}} />
+            </div>
+            {/* Foto 7 - centro alto sovrapposta */}
+            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '180px', top: '120px', left: '50%', transform: 'translateX(-50%) rotate(-1deg)', zIndex: 7}}>
+              <Image src="/Settima Foto.jpeg" alt="Angelo e Giovanna" width={160} height={190} className="object-cover w-full" style={{height: '160px'}} />
+            </div>
           </div>
         </div>
       </section>
