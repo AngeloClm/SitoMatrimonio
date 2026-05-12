@@ -423,7 +423,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-playfair text-center text-rose-800 mb-16 font-bold">Foto</h2>
           
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="max-w-lg mx-auto">
             {/* Upload Photos */}
             <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center justify-center">
               <h3 className="text-2xl font-playfair text-rose-700 mb-6 font-semibold text-center">Condividi le tue foto!</h3>
@@ -464,28 +464,7 @@ export default function Home() {
               </div>
             </div>
             
-            {/* QR Code */}
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center">
-              <h3 className="text-2xl font-playfair text-rose-700 mb-6 font-semibold">Scansiona il QR Code!</h3>
-              <p className="text-gray-700 mb-8">
-                Punta la fotocamera del telefono sul codice QR per accedere direttamente alla cartella e caricare le tue foto!
-              </p>
-              
-              <div className="bg-gray-100 p-6 rounded-lg flex justify-center">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://drive.google.com/drive/folders/1vaGSLehlJtpbMi49WmuZJo4kRoGgYhPo%3Fusp%3Ddrive_link"
-                  alt="QR Code cartella Google Drive"
-                  width={200}
-                  height={200}
-                  className="rounded-lg"
-                />
-              </div>
-              
-              <p className="text-sm text-gray-500 mt-4">
-                📸 Scansiona e carica le tue foto!
-              </p>
-            </div>
+
           </div>
         </div>
       </section>
