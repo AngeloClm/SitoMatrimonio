@@ -186,6 +186,14 @@ function RSVPForm() {
 }
 
 export default function Home() {
+  const [ibanCopied, setIbanCopied] = useState(false);
+
+  const handleCopyIban = () => {
+    navigator.clipboard.writeText('IT34Z0306975374100000008510');
+    setIbanCopied(true);
+    setTimeout(() => setIbanCopied(false), 2500);
+  };
+
   const [isUploading, setIsUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState('');
   const [uploadError, setUploadError] = useState('');
@@ -260,18 +268,43 @@ export default function Home() {
       {/* Navigation Menu */}
       <nav className="fixed top-0 left-0 right-0 bg-white bg-opacity-95 backdrop-blur-sm z-50 shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
-          <ul className="flex justify-center space-x-8 py-4">
-            <li><a href="#matrimonio" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Matrimonio</a></li>
-            <li><a href="#storia" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">La nostra storia</a></li>
-            <li><a href="#rsvp" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">RSVP</a></li>
-            <li><a href="#foto" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Foto</a></li>
-          </ul>
+          <div className="flex items-center justify-between gap-4 py-3">
+            <a href="#top" className="flex items-center shrink-0">
+              <Image
+                src="/Logo.jpeg"
+                alt="Logo matrimonio"
+                width={44}
+                height={44}
+                className="h-11 w-11 rounded-full object-cover bg-white p-0.5 shadow-md ring-2 ring-white/80"
+              />
+            </a>
+
+            <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2">
+              <li><a href="#matrimonio" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Matrimonio</a></li>
+              <li><a href="#storia" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">La nostra storia</a></li>
+              <li><a href="#rsvp" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">RSVP</a></li>
+              <li><a href="#regalo" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Regalo</a></li>
+              <li><a href="#foto" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Foto</a></li>
+            </ul>
+
+            <div className="w-11 shrink-0" aria-hidden="true" />
+          </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-white flex items-center justify-center pt-20">        
+      <section id="top" className="relative min-h-screen bg-white flex items-center justify-center pt-28">        
         <div className="text-center px-4 relative z-10">
+          <div className="mb-8 flex justify-center">
+            <Image
+              src="/Logo.jpeg"
+              alt="Logo matrimonio"
+              width={160}
+              height={160}
+              className="h-32 w-32 rounded-full object-cover bg-white p-1.5 shadow-2xl ring-4 ring-white/80 md:h-40 md:w-40"
+              priority
+            />
+          </div>
           <h2 className="text-2xl md:text-3xl font-playfair text-rose-700 mb-4">20 settembre 2026</h2>
           <h2 className="text-3xl md:text-4xl font-playfair text-rose-800 mb-6 font-bold">Ci sposiamo!</h2>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair text-gray-800 font-bold">
@@ -323,9 +356,9 @@ export default function Home() {
               <h3 className="text-2xl font-playfair text-rose-700 mb-4 font-semibold">Cerimonia</h3>
               <p className="text-lg text-gray-700 mb-2">20 settembre 2026</p>
               <h4 className="text-3xl font-bold text-rose-600 mb-4">11:00</h4>
-              <p className="text-gray-700 mb-4">Chiesa di S. Adiutore<br/>Via Partenio<br/>Cervinara, AV</p>
+              <p className="text-gray-700 mb-4">Chiesa di San Potito<br/>83012 Cervinara, AV</p>
               <div className="space-y-3">
-                <a href="https://maps.google.com/maps?vet=10CAAQoqAOahcKEwiw3KzM8pWUAxUAAAAAHQAAAAAQCQ..i&pvq=Cg0vZy8xMWdkbTY0aG1nIgwKBmNoaWVzYRACGAM&lqi=Ch1jaGllc2EgY2VydmluYXJhIHZpYSBwYXJ0ZW5pb0ju_Iizsq6AgAhaKxAAGAAYASIdY2hpZXNhIGNlcnZpbmFyYSB2aWEgcGFydGVuaW8qBAgDEACSAQ9jYXRob2xpY19jaHVyY2g&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=it&sa=X&ftid=0x133a4b014cff9d27:0xd2b66908bf1fe72f" target="_blank" className="block text-rose-600 hover:text-rose-800 underline">Visualizza la mappa</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Chiesa%20di%20San%20Potito%2C%2083012%20Cervinara%20AV" target="_blank" rel="noopener noreferrer" className="block text-rose-600 hover:text-rose-800 underline">Visualizza la mappa</a>
                 <a href="#" className="block text-rose-600 hover:text-rose-800 underline">Aggiungi al calendario</a>
               </div>
             </div>
@@ -415,6 +448,53 @@ export default function Home() {
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl font-playfair text-center text-rose-800 mb-12 font-bold">RSVP</h2>
           <RSVPForm />
+        </div>
+      </section>
+
+      {/* Foto Section */}
+      {/* Regalo Section */}
+      <section id="regalo" className="py-20 px-4 bg-white">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-4xl font-playfair text-rose-800 mb-4 font-bold">Lista Nozze</h2>
+          <p className="text-lg text-gray-600 mb-12 leading-relaxed">
+            La vostra presenza è il regalo più bello che potete farci.<br/>
+            Se desiderate contribuire al nostro futuro insieme, potete farlo tramite bonifico bancario.
+          </p>
+
+          <div className="bg-gradient-to-br from-rose-50 via-white to-pink-50 p-8 rounded-3xl shadow-xl border border-rose-100">
+            <div className="text-4xl mb-4">💝</div>
+            <h3 className="text-2xl font-playfair text-rose-700 font-semibold mb-2">Coordinate Bancarie</h3>
+            <p className="text-sm text-gray-500 mb-8">Per facilitarvi il gesto, trovate qui i dati per il bonifico.</p>
+
+            <div className="space-y-4 text-left">
+              <div className="bg-white rounded-2xl p-4 shadow-sm border border-rose-50">
+                <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Intestatario</p>
+                <p className="text-gray-800 font-semibold text-lg">Angelo Clemente</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-4 shadow-sm border border-rose-50">
+                <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">IBAN</p>
+                <p className="text-gray-800 font-mono font-semibold text-lg tracking-[0.18em] break-all">IT34Z0306975374100000008510</p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-4 shadow-sm border border-rose-50">
+                <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Causale suggerita</p>
+                <p className="text-gray-800 font-medium">Regalo matrimonio Angelo &amp; Giovanna</p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleCopyIban}
+              className="mt-8 flex items-center gap-2 mx-auto bg-rose-600 text-white px-6 py-3 rounded-full hover:bg-rose-700 transition-colors font-semibold shadow-md"
+            >
+              {ibanCopied ? (
+                <><span>✅</span> IBAN copiato!</>
+              ) : (
+                <><span>📋</span> Copia IBAN</>
+              )}
+            </button>
+          </div>
         </div>
       </section>
 
