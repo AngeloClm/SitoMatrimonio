@@ -77,80 +77,83 @@ function RSVPForm() {
   };
 
   return (
-    <div className="bg-rose-50 p-8 rounded-xl">
+    <div className="letter-card letter-card-ornate rounded-[30px] p-8 md:p-10">
       {showSuccess && (
-        <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+        <div className="mb-6 rounded-2xl border border-green-300 bg-green-50 px-5 py-4 text-green-800">
           ✅ Grazie! La tua RSVP è stata inviata via email con successo!
         </div>
       )}
       
       {showError && (
-        <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+        <div className="mb-6 rounded-2xl border border-red-300 bg-red-50 px-5 py-4 text-red-700">
           ❌ Errore nell'invio. Riprova tra qualche minuto o contattaci direttamente.
         </div>
       )}
       
-      <p className="text-lg text-gray-700 mb-8 text-center">
+      <div className="mb-8 text-center">
+        <div className="section-kicker mx-auto mb-4 w-fit">Risposta gradita</div>
+        <p className="paper-note text-lg leading-relaxed">
         Non vediamo l'ora di vedervi! Se hai specifiche restrizioni dietetiche, 
         assicurati che sia indicato di seguito. Si prega di rispondere entro il <strong>20 Giugno 2026</strong>
-      </p>
+        </p>
+      </div>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Nome *</label>
+            <label className="mb-2 block font-semibold text-[var(--ink)]">Nome *</label>
             <input 
               type="text" 
               value={formData.nome}
               onChange={(e) => setFormData({...formData, nome: e.target.value})}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-black" 
+              className="paper-input" 
               required 
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Cognome *</label>
+            <label className="mb-2 block font-semibold text-[var(--ink)]">Cognome *</label>
             <input 
               type="text" 
               value={formData.cognome}
               onChange={(e) => setFormData({...formData, cognome: e.target.value})}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-black" 
+              className="paper-input" 
               required 
             />
           </div>
         </div>
         
         <div>
-          <label className="block text-gray-700 font-medium mb-3">Parteciperete? *</label>
+          <label className="mb-3 block font-semibold text-[var(--ink)]">Parteciperete? *</label>
           <div className="space-y-2">
             {[
               {value: 'yes', label: 'Sì'},
               {value: 'no', label: 'No'}
             ].map((option) => (
-              <label key={option.value} className="flex items-center">
+              <label key={option.value} className="flex items-center gap-3 rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.72)] px-4 py-3">
                 <input 
                   type="radio" 
                   name="attendance" 
                   value={option.value}
                   checked={formData.partecipazione === option.value}
                   onChange={(e) => setFormData({...formData, partecipazione: e.target.value})}
-                  className="mr-3" 
+                  className="ink-option" 
                   required
                 />
-                <span className="text-black">{option.label}</span>
+                <span className="text-[var(--ink)]">{option.label}</span>
               </label>
             ))}
           </div>
         </div>
         
         <div>
-          <label className="flex items-center mb-3">
+          <label className="mb-3 flex items-center gap-3 text-[var(--ink)]">
             <input 
               type="checkbox" 
               checked={formData.restrizioni}
               onChange={(e) => setFormData({...formData, restrizioni: e.target.checked})}
-              className="mr-3" 
+              className="ink-option" 
             />
-            <span className="text-black">Avete delle restrizioni alimentari? (vegetariano, allergie, ecc.)</span>
+            <span>Avete delle restrizioni alimentari? (vegetariano, allergie, ecc.)</span>
           </label>
           {formData.restrizioni && (
             <input 
@@ -158,17 +161,17 @@ function RSVPForm() {
               placeholder="Specificare le restrizioni..."
               value={formData.restrizioniDettagli}
               onChange={(e) => setFormData({...formData, restrizioniDettagli: e.target.value})}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 mt-2 text-black" 
+              className="paper-input mt-2" 
             />
           )}
         </div>
         
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Commenti o domande</label>
+          <label className="mb-2 block font-semibold text-[var(--ink)]">Commenti o domande</label>
           <textarea 
             value={formData.commenti}
             onChange={(e) => setFormData({...formData, commenti: e.target.value})}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-black" 
+            className="paper-textarea" 
             rows={4}
           />
         </div>
@@ -176,7 +179,7 @@ function RSVPForm() {
         <button 
           type="submit" 
           disabled={isSubmitting}
-          className="w-full bg-rose-600 text-white py-3 px-6 rounded-lg hover:bg-rose-700 transition-colors font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="wax-button w-full rounded-full px-6 py-3 text-white font-semibold disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? 'Invio in corso...' : 'Invia RSVP'}
         </button>
@@ -264,9 +267,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="stationery-page min-h-screen text-[var(--ink)]">
       {/* Navigation Menu */}
-      <nav className="fixed top-0 left-0 right-0 bg-white bg-opacity-95 backdrop-blur-sm z-50 shadow-lg">
+      <nav className="quill-nav fixed top-0 left-0 right-0 z-50 shadow-lg shadow-amber-900/5">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-center justify-between gap-4 py-3">
             <a href="#top" className="flex items-center shrink-0">
@@ -280,11 +283,11 @@ export default function Home() {
             </a>
 
             <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2">
-              <li><a href="#matrimonio" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Matrimonio</a></li>
-              <li><a href="#storia" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">La nostra storia</a></li>
-              <li><a href="#rsvp" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">RSVP</a></li>
-              <li><a href="#regalo" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Regalo</a></li>
-              <li><a href="#foto" className="text-rose-700 hover:text-rose-900 font-medium transition-colors">Foto</a></li>
+              <li><a href="#matrimonio" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Matrimonio</a></li>
+              <li><a href="#storia" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">La nostra storia</a></li>
+              <li><a href="#rsvp" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">RSVP</a></li>
+              <li><a href="#regalo" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Regalo</a></li>
+              <li><a href="#foto" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Foto</a></li>
             </ul>
 
             <div className="w-11 shrink-0" aria-hidden="true" />
@@ -293,7 +296,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section id="top" className="relative min-h-screen bg-white flex items-center justify-center pt-28">        
+      <section id="top" className="relative min-h-screen flex items-center justify-center px-4 pt-28">        
         <div className="text-center px-4 relative z-10">
           <div className="mb-8 flex justify-center">
             <Image
@@ -305,9 +308,10 @@ export default function Home() {
               priority
             />
           </div>
-          <h2 className="text-2xl md:text-3xl font-playfair text-rose-700 mb-4">20 settembre 2026</h2>
-          <h2 className="text-3xl md:text-4xl font-playfair text-rose-800 mb-6 font-bold">Ci sposiamo!</h2>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair text-gray-800 font-bold">
+          <p className="script-heading text-4xl md:text-6xl mb-3">By Royal Invitation</p>
+          <h2 className="ink-title text-2xl md:text-3xl font-playfair mb-4 tracking-[0.18em] uppercase">20 settembre 2026</h2>
+          <h2 className="script-heading text-5xl md:text-6xl mb-3">Ci sposiamo!</h2>
+          <h1 className="ink-title text-4xl md:text-6xl lg:text-7xl font-playfair font-bold">
             Angelo & Giovanna
           </h1>
           
@@ -346,33 +350,33 @@ export default function Home() {
       </section>
 
       {/* Matrimonio Section */}
-      <section id="matrimonio" className="py-20 px-4 bg-white">
+      <section id="matrimonio" className="letter-section py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-playfair text-center text-rose-800 mb-16 font-bold">Matrimonio</h2>
+          <h2 className="ink-title text-4xl font-playfair text-center mb-16 font-bold">Matrimonio</h2>
           
           <div className="grid md:grid-cols-2 gap-12">
             {/* Cerimonia */}
-            <div className="text-center bg-rose-50 p-8 rounded-xl">
-              <h3 className="text-2xl font-playfair text-rose-700 mb-4 font-semibold">Cerimonia</h3>
+            <div className="letter-card text-center p-8 rounded-[28px]">
+              <h3 className="script-heading text-4xl mb-3">Cerimonia</h3>
               <p className="text-lg text-gray-700 mb-2">20 settembre 2026</p>
-              <h4 className="text-3xl font-bold text-rose-600 mb-4">11:00</h4>
+              <h4 className="text-3xl font-bold text-[var(--rose-antique)] mb-4">11:00</h4>
               <p className="text-gray-700 mb-4">Chiesa di San Potito<br/>83012 Cervinara, AV</p>
               <div className="space-y-3">
-                <a href="https://www.google.com/maps/search/?api=1&query=Chiesa%20di%20San%20Potito%2C%2083012%20Cervinara%20AV" target="_blank" rel="noopener noreferrer" className="block text-rose-600 hover:text-rose-800 underline">Visualizza la mappa</a>
-                <a href="#" className="block text-rose-600 hover:text-rose-800 underline">Aggiungi al calendario</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Chiesa%20di%20San%20Potito%2C%2083012%20Cervinara%20AV" target="_blank" rel="noopener noreferrer" className="block text-[var(--rose-antique)] hover:text-[var(--ink)] underline">Visualizza la mappa</a>
+                <a href="#" className="block text-[var(--rose-antique)] hover:text-[var(--ink)] underline">Aggiungi al calendario</a>
               </div>
             </div>
 
             {/* Ricevimento */}
-            <div className="text-center bg-pink-50 p-8 rounded-xl">
-              <h3 className="text-2xl font-playfair text-pink-700 mb-4 font-semibold">Ricevimento</h3>
+            <div className="letter-card text-center p-8 rounded-[28px]">
+              <h3 className="script-heading text-4xl mb-3">Ricevimento</h3>
               <p className="text-lg text-gray-700 mb-2">20 settembre 2026</p>
-              <h4 className="text-3xl font-bold text-pink-600 mb-4">14:00</h4>
+              <h4 className="text-3xl font-bold text-[var(--rose-antique)] mb-4">14:00</h4>
               <p className="text-gray-700 mb-4">Villa Regina<br/>Via Piani<br/>83035 Grottaminarda, AV</p>
               <div className="space-y-3">
-                <a href="https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUqBwgBEAAYjwIyBggAEEUYOTIHCAEQABiPAtIBCDI4NTVqMGo3qAIAsAIA&um=1&ie=UTF-8&fb=1&gl=it&sa=X&geocode=KTUoI3M7hjkTMcr7Zhr2BMhS&daddr=via+piani,+83035+Grottaminarda+V" target="_blank" className="block text-pink-600 hover:text-pink-800 underline">Visualizza la mappa</a>
-                <a href="#" className="block text-pink-600 hover:text-pink-800 underline">Aggiungi al calendario</a>
-                <a href="#rsvp" className="inline-block bg-pink-600 text-white px-6 py-3 rounded-lg hover:bg-pink-700 transition-colors">RSVP</a>
+                <a href="https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUqBwgBEAAYjwIyBggAEEUYOTIHCAEQABiPAtIBCDI4NTVqMGo3qAIAsAIA&um=1&ie=UTF-8&fb=1&gl=it&sa=X&geocode=KTUoI3M7hjkTMcr7Zhr2BMhS&daddr=via+piani,+83035+Grottaminarda+V" target="_blank" className="block text-[var(--rose-antique)] hover:text-[var(--ink)] underline">Visualizza la mappa</a>
+                <a href="#" className="block text-[var(--rose-antique)] hover:text-[var(--ink)] underline">Aggiungi al calendario</a>
+                <a href="#rsvp" className="wax-button inline-block text-white px-6 py-3 rounded-full">RSVP</a>
               </div>
             </div>
           </div>
@@ -380,26 +384,33 @@ export default function Home() {
       </section>
 
       {/* La nostra storia */}
-      <section id="storia" className="py-20 px-4 bg-gradient-to-br from-rose-50 to-pink-100">
+      <section id="storia" className="letter-section py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-playfair text-center text-rose-800 mb-16 font-bold">La nostra storia</h2>
+          <div className="mb-6 text-center">
+            <div className="section-kicker mx-auto mb-4 w-fit">Capitolo Primo</div>
+            <h2 className="ink-title text-4xl font-playfair text-center mb-16 font-bold">La nostra storia</h2>
+          </div>
           
-          <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-            <p className="mb-6">
+          <div className="letter-card letter-card-ornate rounded-[30px] px-8 py-10 md:px-12">
+            <div className="paper-divider mb-8" />
+            <div className="max-w-none text-lg leading-relaxed text-[var(--ink-soft)] space-y-6 text-center md:text-left">
+            <p>
               La nostra storia è iniziata 12 anni fa, a Cervinara, in un momento semplice che si è trasformato in qualcosa di straordinario. I nostri sguardi si sono incontrati e, quasi senza accorgercene, tutto il resto ha iniziato a svanire. Quella scintilla è diventata una conversazione senza fine, fatta di risate, emozioni e della sorprendente sensazione di esserci sempre conosciuti.
             </p>
             
-            <p className="mb-6">
+            <p>
              Da quel giorno, le nostre vite hanno iniziato a intrecciarsi in un viaggio lungo dodici anni. Abbiamo condiviso sogni, scoperto il mondo insieme, collezionato ricordi e imparato, passo dopo passo, che casa non è un luogo, ma il modo in cui ci sentiamo quando siamo l’uno accanto all’altra.
             </p>
             
-            <p className="mb-6">
+            <p>
               A dicembre 2025 abbiamo scelto di fare un passo in più, promettendoci un futuro ancora più grande. Oggi siamo più di una coppia: siamo migliori amici, complici, e partner in ogni avventura.
             </p>
             
-            <p className="text-center text-xl font-playfair text-rose-700 font-semibold">
+            <p className="script-heading text-center text-3xl md:text-4xl leading-tight">
              E ora, con il cuore pieno di tutto ciò che siamo stati e di tutto ciò che saremo, siamo pronti a iniziare il nostro prossimo capitolo: quello che, a settembre, ci porterà a dire “per sempre”.
             </p>
+            </div>
+            <div className="paper-divider mt-8" />
           </div>
         </div>
       </section>
@@ -407,26 +418,30 @@ export default function Home() {
 
 
       {/* Codice di abbigliamento */}
-      <section className="py-20 px-4 bg-gradient-to-br from-pink-50 to-rose-100">
+      <section className="letter-section py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-playfair text-rose-800 mb-12 font-bold">Codice di abbigliamento</h2>
+          <div className="section-kicker mx-auto mb-4 w-fit">Etichetta</div>
+          <h2 className="ink-title text-4xl font-playfair mb-12 font-bold">Codice di abbigliamento</h2>
           
-          <div className="bg-white p-8 rounded-xl shadow-lg">
-            <p className="text-lg text-gray-700 mb-6">
+          <div className="letter-card letter-card-ornate rounded-[30px] p-8 shadow-lg md:p-10">
+            <div className="mb-6 flex justify-center">
+              <div className="wax-seal">AG</div>
+            </div>
+            <p className="paper-note text-lg mb-6">
               La vostra presenza è la cosa più importante per noi!
             </p>
-            <p className="text-lg text-gray-700 mb-6">
+            <p className="paper-note text-lg mb-6">
               Ma vi saremo molto grati se sosterrete lo schema dei colori del nostro matrimonio!
             </p>
             
             <div className="grid md:grid-cols-2 gap-8 mt-8">
-              <div>
-                <h4 className="text-xl font-semibold text-rose-700 mb-3">Per le donne</h4>
-                <p className="text-gray-600">Colori sui toni del rosa, bordeaux, champagne</p>
+              <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
+                <h4 className="script-heading text-3xl mb-3">Per le donne</h4>
+                <p className="paper-note">Colori sui toni del rosa, bordeaux, champagne</p>
               </div>
-              <div>
-                <h4 className="text-xl font-semibold text-rose-700 mb-3">Per gli uomini</h4>
-                <p className="text-gray-600">Camicia bianca, pantaloni/giacca scuri</p>
+              <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
+                <h4 className="script-heading text-3xl mb-3">Per gli uomini</h4>
+                <p className="paper-note">Camicia bianca, pantaloni/giacca scuri</p>
               </div>
             </div>
           </div>
@@ -434,59 +449,66 @@ export default function Home() {
       </section>
 
       {/* Countdown */}
-      <section className="py-16 px-4 bg-rose-600 text-white">
+      <section className="px-4 py-16">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-playfair mb-4 font-bold">Mancano solo...</h2>
-          <div className="text-6xl font-bold mb-2">143</div>
-          <p className="text-xl">giorni al matrimonio!</p>
-          <p className="text-lg mt-4 opacity-90">Salva la data: 20 settembre 2026</p>
+          <div className="letter-card rounded-[30px] px-8 py-10 md:px-12">
+            <div className="section-kicker mx-auto mb-4 w-fit">Save The Date</div>
+            <h2 className="ink-title text-3xl font-playfair mb-4 font-bold">Mancano solo...</h2>
+            <div className="script-heading text-7xl md:text-8xl leading-none mb-2">143</div>
+            <p className="ink-title text-xl">giorni al matrimonio!</p>
+            <p className="paper-note text-lg mt-4">Salva la data: 20 settembre 2026</p>
+          </div>
         </div>
       </section>
 
       {/* RSVP Section */}
-      <section id="rsvp" className="py-20 px-4 bg-white">
+      <section id="rsvp" className="letter-section py-20 px-4">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-4xl font-playfair text-center text-rose-800 mb-12 font-bold">RSVP</h2>
+          <div className="section-kicker mx-auto mb-4 w-fit">Invio risposta</div>
+          <h2 className="ink-title text-4xl font-playfair text-center mb-12 font-bold">RSVP</h2>
           <RSVPForm />
         </div>
       </section>
 
       {/* Foto Section */}
       {/* Regalo Section */}
-      <section id="regalo" className="py-20 px-4 bg-white">
+      <section id="regalo" className="letter-section py-20 px-4">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl font-playfair text-rose-800 mb-4 font-bold">Lista Nozze</h2>
-          <p className="text-lg text-gray-600 mb-12 leading-relaxed">
+          <div className="section-kicker mx-auto mb-4 w-fit">Un dono per noi</div>
+          <h2 className="ink-title text-4xl font-playfair mb-4 font-bold">Lista Nozze</h2>
+          <p className="paper-note text-lg mb-12 leading-relaxed">
             La vostra presenza è il regalo più bello che potete farci.<br/>
             Se desiderate contribuire al nostro futuro insieme, potete farlo tramite bonifico bancario.
           </p>
 
-          <div className="bg-gradient-to-br from-rose-50 via-white to-pink-50 p-8 rounded-3xl shadow-xl border border-rose-100">
-            <div className="text-4xl mb-4">💝</div>
-            <h3 className="text-2xl font-playfair text-rose-700 font-semibold mb-2">Coordinate Bancarie</h3>
-            <p className="text-sm text-gray-500 mb-8">Per facilitarvi il gesto, trovate qui i dati per il bonifico.</p>
+          <div className="letter-card letter-card-ornate rounded-[30px] p-8 shadow-xl">
+            <div className="mb-4 flex justify-center">
+              <div className="wax-seal">AG</div>
+            </div>
+            <h3 className="script-heading text-4xl mb-2">Coordinate Bancarie</h3>
+            <p className="paper-note text-sm mb-8">Per facilitarvi il gesto, trovate qui i dati per il bonifico.</p>
 
             <div className="space-y-4 text-left">
-              <div className="bg-white rounded-2xl p-4 shadow-sm border border-rose-50">
-                <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Intestatario</p>
-                <p className="text-gray-800 font-semibold text-lg">Angelo Clemente</p>
+              <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
+                <p className="mb-1 text-xs uppercase tracking-widest text-[var(--gold)]">Intestatario</p>
+                <p className="text-lg font-semibold text-[var(--ink)]">Angelo Clemente</p>
               </div>
 
-              <div className="bg-white rounded-2xl p-4 shadow-sm border border-rose-50">
-                <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">IBAN</p>
-                <p className="text-gray-800 font-mono font-semibold text-lg tracking-[0.18em] break-all">IT34Z0306975374100000008510</p>
+              <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
+                <p className="mb-1 text-xs uppercase tracking-widest text-[var(--gold)]">IBAN</p>
+                <p className="break-all text-lg font-semibold tracking-[0.18em] text-[var(--ink)]">IT34Z0306975374100000008510</p>
               </div>
 
-              <div className="bg-white rounded-2xl p-4 shadow-sm border border-rose-50">
-                <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Causale suggerita</p>
-                <p className="text-gray-800 font-medium">Regalo matrimonio Angelo &amp; Giovanna</p>
+              <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
+                <p className="mb-1 text-xs uppercase tracking-widest text-[var(--gold)]">Causale suggerita</p>
+                <p className="font-medium text-[var(--ink)]">Regalo matrimonio Angelo &amp; Giovanna</p>
               </div>
             </div>
 
             <button
               type="button"
               onClick={handleCopyIban}
-              className="mt-8 flex items-center gap-2 mx-auto bg-rose-600 text-white px-6 py-3 rounded-full hover:bg-rose-700 transition-colors font-semibold shadow-md"
+              className="wax-button mx-auto mt-8 flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-white"
             >
               {ibanCopied ? (
                 <><span>✅</span> IBAN copiato!</>
@@ -499,15 +521,19 @@ export default function Home() {
       </section>
 
       {/* Foto Section */}
-      <section id="foto" className="py-20 px-4 bg-gradient-to-br from-pink-50 to-rose-100">
+      <section id="foto" className="letter-section py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-playfair text-center text-rose-800 mb-16 font-bold">Foto</h2>
+          <div className="section-kicker mx-auto mb-4 w-fit">Galleria degli ospiti</div>
+          <h2 className="ink-title text-4xl font-playfair text-center mb-16 font-bold">Foto</h2>
           
           <div className="max-w-lg mx-auto">
             {/* Upload Photos */}
-            <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center justify-center">
-              <h3 className="text-2xl font-playfair text-rose-700 mb-6 font-semibold text-center">Condividi le tue foto!</h3>
-              <p className="text-gray-700 mb-8 text-center">
+            <div className="letter-card letter-card-ornate flex flex-col items-center justify-center rounded-[30px] p-8 shadow-lg">
+              <div className="mb-5 flex justify-center">
+                <div className="wax-seal">AG</div>
+              </div>
+              <h3 className="script-heading mb-6 text-center text-4xl">Condividi le tue foto!</h3>
+              <p className="paper-note mb-8 text-center text-lg leading-relaxed">
                 Carica le tue foto direttamente qui. Puoi caricare quante foto vuoi!
               </p>
 
@@ -515,7 +541,7 @@ export default function Home() {
                 type="button"
                 onClick={handleUploadClick}
                 disabled={isUploading}
-                className="flex items-center gap-3 bg-rose-600 text-white px-8 py-4 rounded-xl hover:bg-rose-700 transition-colors font-semibold text-lg shadow-md disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="wax-button flex items-center gap-3 rounded-full px-8 py-4 text-lg font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <span className="text-2xl">📁</span>
                 {isUploading ? 'Caricamento in corso...' : 'Carica le tue foto'}
@@ -531,16 +557,16 @@ export default function Home() {
               />
 
               {uploadMessage && (
-                <p className="mt-4 text-green-700 font-medium text-center">{uploadMessage}</p>
+                <p className="mt-4 text-center font-medium text-green-700">{uploadMessage}</p>
               )}
 
               {uploadError && (
-                <p className="mt-4 text-red-600 font-medium text-center">{uploadError}</p>
+                <p className="mt-4 text-center font-medium text-red-600">{uploadError}</p>
               )}
 
               <div className="mt-8 text-center">
-                <p className="text-gray-700 mb-2">Usa l&apos;hashtag sui social:</p>
-                <span className="bg-rose-100 text-rose-700 px-4 py-2 rounded-full font-semibold">#AngeloEGiovanna2026</span>
+                <p className="paper-note mb-2">Usa l&apos;hashtag sui social:</p>
+                <span className="inline-block rounded-full border border-[rgba(181,150,92,0.22)] bg-[rgba(255,251,244,0.88)] px-4 py-2 font-semibold text-[var(--rose-antique)]">#AngeloEGiovanna2026</span>
               </div>
             </div>
             
@@ -550,11 +576,12 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-rose-800 text-white py-12 text-center">
+      <footer className="footer-stationery py-12 text-center text-white">
         <div className="max-w-4xl mx-auto px-4">
-          <h3 className="text-2xl font-playfair mb-4">Angelo & Giovanna</h3>
+          <div className="section-kicker mx-auto mb-4 w-fit text-[rgba(244,226,194,0.75)]">Con affetto</div>
+          <h3 className="mb-4 text-2xl font-playfair">Angelo & Giovanna</h3>
           <p className="mb-4">20 Settembre 2026</p>
-          <p className="text-rose-200">Grazie per essere parte del nostro giorno speciale! 💕</p>
+          <p className="text-[rgba(244,226,194,0.8)]">Grazie per essere parte del nostro giorno speciale! 💕</p>
         </div>
       </footer>
     </div>
