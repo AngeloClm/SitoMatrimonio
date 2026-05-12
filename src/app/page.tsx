@@ -202,7 +202,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-screen bg-white flex items-center justify-center pt-20">        
         <div className="text-center px-4 relative z-10">
-          <h2 className="text-2xl md:text-3xl font-playfair text-rose-700 mb-4">20 settembre 2026</h2>
+          <h2 className="text-2xl md:text-3xl font-playfair text-rose-700 mb-4">19 settembre 2026</h2>
           <h2 className="text-3xl md:text-4xl font-playfair text-rose-800 mb-6 font-bold">Ci sposiamo!</h2>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair text-gray-800 font-bold">
             Angelo & Giovanna
