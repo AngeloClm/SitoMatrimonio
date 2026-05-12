@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import emailjs from '@emailjs/browser';
+import { createClient } from "@supabase/supabase-js";
 
 // Componente per il form RSVP
 function RSVPForm() {
@@ -185,6 +186,75 @@ function RSVPForm() {
 }
 
 export default function Home() {
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState('');
+  const [uploadError, setUploadError] = useState('');
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseBucket = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || 'wedding-photos';
+
+  const supabase = supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null;
+
+  const handleUploadClick = () => {
+    if (!supabase) {
+      setUploadError('Configura Supabase (.env.local) prima di caricare le foto.');
+      setUploadMessage('');
+      return;
+    }
+
+    setUploadError('');
+    setUploadMessage('');
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    if (!supabase) {
+      setUploadError('Configura Supabase (.env.local) prima di caricare le foto.');
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadError('');
+    setUploadMessage('');
+
+    try {
+      for (const file of Array.from(files)) {
+        const filePath = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}-${file.name}`;
+
+        const { error } = await supabase.storage
+          .from(supabaseBucket)
+          .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: false,
+          });
+
+        if (error) {
+          throw new Error(`${file.name}: ${error.message}`);
+        }
+      }
+
+      setUploadMessage(files.length === 1
+        ? 'Foto caricata con successo! Grazie!'
+        : `${files.length} foto caricate con successo! Grazie!`);
+    } catch (error) {
+      console.error('Errore upload foto:', error);
+      setUploadError('Errore durante il caricamento. Riprova tra qualche minuto.');
+    } finally {
+      setIsUploading(false);
+      e.target.value = '';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation Menu */}
@@ -358,18 +428,35 @@ export default function Home() {
             <div className="bg-white p-8 rounded-xl shadow-lg flex flex-col items-center justify-center">
               <h3 className="text-2xl font-playfair text-rose-700 mb-6 font-semibold text-center">Condividi le tue foto!</h3>
               <p className="text-gray-700 mb-8 text-center">
-                Carica le tue foto direttamente nella nostra cartella condivisa su Google Drive. Puoi caricare quante foto vuoi!
+                Carica le tue foto direttamente qui. Puoi caricare quante foto vuoi!
               </p>
 
-              <a
-                href="https://drive.google.com/drive/folders/1vaGSLehlJtpbMi49WmuZJo4kRoGgYhPo?usp=drive_link"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-rose-600 text-white px-8 py-4 rounded-xl hover:bg-rose-700 transition-colors font-semibold text-lg shadow-md"
+              <button
+                type="button"
+                onClick={handleUploadClick}
+                disabled={isUploading}
+                className="flex items-center gap-3 bg-rose-600 text-white px-8 py-4 rounded-xl hover:bg-rose-700 transition-colors font-semibold text-lg shadow-md disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 <span className="text-2xl">📁</span>
-                Carica le tue foto
-              </a>
+                {isUploading ? 'Caricamento in corso...' : 'Carica le tue foto'}
+              </button>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFileChange}
+                className="hidden"
+              />
+
+              {uploadMessage && (
+                <p className="mt-4 text-green-700 font-medium text-center">{uploadMessage}</p>
+              )}
+
+              {uploadError && (
+                <p className="mt-4 text-red-600 font-medium text-center">{uploadError}</p>
+              )}
 
               <div className="mt-8 text-center">
                 <p className="text-gray-700 mb-2">Usa l&apos;hashtag sui social:</p>
