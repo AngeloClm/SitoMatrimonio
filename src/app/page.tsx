@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import emailjs from '@emailjs/browser';
 import { createClient } from "@supabase/supabase-js";
+import { saveAs } from "file-saver";
 
 // Componente per il form RSVP
 function RSVPForm() {
@@ -200,15 +201,21 @@ export default function Home() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState('');
   const [uploadError, setUploadError] = useState('');
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadMessage, setDownloadMessage] = useState('');
+  const [downloadError, setDownloadError] = useState('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const supabaseBucket = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || 'wedding-photos';
 
-  const supabase = supabaseUrl && supabaseAnonKey
-    ? createClient(supabaseUrl, supabaseAnonKey)
-    : null;
+  const supabase = useMemo(
+    () => (supabaseUrl && supabaseAnonKey
+      ? createClient(supabaseUrl, supabaseAnonKey)
+      : null),
+    [supabaseUrl, supabaseAnonKey],
+  );
 
   const handleUploadClick = () => {
     if (!supabase) {
@@ -263,6 +270,45 @@ export default function Home() {
     } finally {
       setIsUploading(false);
       e.target.value = '';
+    }
+  };
+
+  const handleDownloadAllPhotos = async () => {
+    if (!supabase) {
+      setDownloadError('Configura Supabase (.env.local) prima di scaricare le foto.');
+      setDownloadMessage('');
+      return;
+    }
+
+    setIsDownloading(true);
+    setDownloadError('');
+    setDownloadMessage('Preparazione archivio foto in corso...');
+
+    try {
+      const response = await fetch('/api/photos/download');
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Impossibile scaricare le foto.');
+      }
+
+      const blob = await response.blob();
+
+      if (blob.size === 0) {
+        setDownloadMessage('Non ci sono foto da scaricare al momento.');
+        return;
+      }
+
+      const dateStamp = new Date().toISOString().slice(0, 10);
+      saveAs(blob, `foto-matrimonio-${dateStamp}.zip`);
+
+      setDownloadMessage('Download avviato: archivio ZIP pronto.');
+    } catch (error) {
+      console.error('Errore download foto:', error);
+      setDownloadError('Errore durante la preparazione del download. Verifica la chiave service role lato server.');
+      setDownloadMessage('');
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -547,6 +593,16 @@ export default function Home() {
                 {isUploading ? 'Caricamento in corso...' : 'Carica le tue foto'}
               </button>
 
+              <button
+                type="button"
+                onClick={handleDownloadAllPhotos}
+                disabled={isDownloading}
+                className="mt-4 flex items-center gap-3 rounded-full border border-[rgba(181,150,92,0.4)] bg-[rgba(255,252,246,0.9)] px-8 py-4 text-lg font-semibold text-[var(--ink)] shadow-sm hover:bg-[rgba(255,252,246,1)] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <span className="text-2xl">⬇️</span>
+                {isDownloading ? 'Download in corso...' : 'Scarica tutte le foto'}
+              </button>
+
               <input
                 ref={fileInputRef}
                 type="file"
@@ -562,6 +618,14 @@ export default function Home() {
 
               {uploadError && (
                 <p className="mt-4 text-center font-medium text-red-600">{uploadError}</p>
+              )}
+
+              {downloadMessage && (
+                <p className="mt-3 text-center font-medium text-green-700">{downloadMessage}</p>
+              )}
+
+              {downloadError && (
+                <p className="mt-3 text-center font-medium text-red-600">{downloadError}</p>
               )}
 
               <div className="mt-8 text-center">
