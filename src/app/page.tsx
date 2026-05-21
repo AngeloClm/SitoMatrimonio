@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import emailjs from '@emailjs/browser';
 import { createClient } from "@supabase/supabase-js";
 import { saveAs } from "file-saver";
@@ -191,11 +191,38 @@ function RSVPForm() {
 
 export default function Home() {
   const [ibanCopied, setIbanCopied] = useState(false);
+  const [isSiteUnlocked, setIsSiteUnlocked] = useState(false);
+  const [sitePassword, setSitePassword] = useState('');
+  const [sitePasswordError, setSitePasswordError] = useState('');
 
   const handleCopyIban = () => {
     navigator.clipboard.writeText('IT34Z0306975374100000008510');
     setIbanCopied(true);
     setTimeout(() => setIbanCopied(false), 2500);
+  };
+
+  const SITE_ACCESS_PASSWORD = 'Politano01.';
+
+  useEffect(() => {
+    const savedAccess = window.sessionStorage.getItem('matrimonio-site-unlocked');
+
+    if (savedAccess === 'true') {
+      setIsSiteUnlocked(true);
+    }
+  }, []);
+
+  const handleSitePasswordSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (sitePassword.trim() !== SITE_ACCESS_PASSWORD) {
+      setSitePasswordError('Password errata. Riprova.');
+      return;
+    }
+
+    window.sessionStorage.setItem('matrimonio-site-unlocked', 'true');
+    setIsSiteUnlocked(true);
+    setSitePassword('');
+    setSitePasswordError('');
   };
 
   const [isUploading, setIsUploading] = useState(false);
@@ -356,6 +383,64 @@ export default function Home() {
       closeDownloadPasswordModal();
     }
   };
+
+  if (!isSiteUnlocked) {
+    return (
+      <div className="stationery-page relative flex min-h-screen items-center justify-center px-4 py-8 text-[var(--ink)]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(191,158,99,0.18),transparent_34%),linear-gradient(180deg,#f8f0e4_0%,#efe0ca_100%)]" />
+
+        <div className="relative z-10 w-full max-w-md rounded-[30px] border border-[rgba(181,150,92,0.2)] bg-[rgba(255,251,244,0.97)] p-6 shadow-2xl sm:p-8">
+          <div className="mb-5 flex justify-center">
+            <Image
+              src="/Logo.jpeg"
+              alt="Logo matrimonio"
+              width={92}
+              height={92}
+              className="h-20 w-20 rounded-full object-cover bg-white p-1 shadow-lg ring-2 ring-white/80"
+              priority
+            />
+          </div>
+
+          <div className="mb-6 text-center">
+            <div className="section-kicker mx-auto mb-3 w-fit">Accesso riservato</div>
+            <h1 className="ink-title text-3xl font-playfair font-bold sm:text-4xl">Angelo & Giovanna</h1>
+            <p className="paper-note mt-3 text-sm leading-relaxed sm:text-base">
+              Inserisci la password per entrare nel sito.
+            </p>
+          </div>
+
+          <form onSubmit={handleSitePasswordSubmit} className="space-y-4">
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-[var(--ink)]">Password</label>
+              <input
+                type="password"
+                value={sitePassword}
+                onChange={(event) => {
+                  setSitePassword(event.target.value);
+                  setSitePasswordError('');
+                }}
+                className="paper-input text-base"
+                placeholder="Inserisci la password"
+                autoComplete="current-password"
+                autoFocus
+              />
+            </div>
+
+            {sitePasswordError && (
+              <p className="text-sm font-medium text-red-600">{sitePasswordError}</p>
+            )}
+
+            <button
+              type="submit"
+              className="wax-button w-full rounded-full px-6 py-3 font-semibold text-white"
+            >
+              Entra nel sito
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="stationery-page min-h-screen text-[var(--ink)]">
