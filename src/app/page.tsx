@@ -204,6 +204,9 @@ export default function Home() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadMessage, setDownloadMessage] = useState('');
   const [downloadError, setDownloadError] = useState('');
+  const [showDownloadPasswordModal, setShowDownloadPasswordModal] = useState(false);
+  const [downloadPassword, setDownloadPassword] = useState('');
+  const [downloadPasswordError, setDownloadPasswordError] = useState('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -227,6 +230,22 @@ export default function Home() {
     setUploadError('');
     setUploadMessage('');
     fileInputRef.current?.click();
+  };
+
+  const openDownloadPasswordModal = () => {
+    setDownloadPassword('');
+    setDownloadPasswordError('');
+    setShowDownloadPasswordModal(true);
+  };
+
+  const closeDownloadPasswordModal = () => {
+    if (isDownloading) {
+      return;
+    }
+
+    setShowDownloadPasswordModal(false);
+    setDownloadPassword('');
+    setDownloadPasswordError('');
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -273,11 +292,16 @@ export default function Home() {
     }
   };
 
-  const handleDownloadAllPhotos = async () => {
+  const handleDownloadAllPhotos = async (enteredPassword: string) => {
     if (!supabase) {
       setDownloadError('Configura Supabase (.env.local) prima di scaricare le foto.');
       setDownloadMessage('');
-      return;
+      return false;
+    }
+
+    if (!enteredPassword) {
+      setDownloadPasswordError('Inserisci la password.');
+      return false;
     }
 
     setIsDownloading(true);
@@ -285,10 +309,17 @@ export default function Home() {
     setDownloadMessage('Preparazione archivio foto in corso...');
 
     try {
-      const response = await fetch('/api/photos/download');
+      const response = await fetch('/api/photos/download', {
+        headers: {
+          'x-photo-password': enteredPassword,
+        },
+      });
 
       if (!response.ok) {
         const errorText = await response.text();
+        if (response.status === 401) {
+          throw new Error('Password non valida.');
+        }
         throw new Error(errorText || 'Impossibile scaricare le foto.');
       }
 
@@ -303,12 +334,26 @@ export default function Home() {
       saveAs(blob, `foto-matrimonio-${dateStamp}.zip`);
 
       setDownloadMessage('Download avviato: archivio ZIP pronto.');
+      return true;
     } catch (error) {
       console.error('Errore download foto:', error);
-      setDownloadError('Errore durante la preparazione del download. Verifica la chiave service role lato server.');
+      setDownloadError(error instanceof Error && error.message === 'Password non valida.'
+        ? 'Password errata. Riprova.'
+        : 'Errore durante la preparazione del download.');
       setDownloadMessage('');
+      return false;
     } finally {
       setIsDownloading(false);
+    }
+  };
+
+  const handleDownloadPasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const success = await handleDownloadAllPhotos(downloadPassword.trim());
+
+    if (success) {
+      closeDownloadPasswordModal();
     }
   };
 
@@ -595,7 +640,7 @@ export default function Home() {
 
               <button
                 type="button"
-                onClick={handleDownloadAllPhotos}
+                onClick={openDownloadPasswordModal}
                 disabled={isDownloading}
                 className="mt-4 flex items-center gap-3 rounded-full border border-[rgba(181,150,92,0.4)] bg-[rgba(255,252,246,0.9)] px-8 py-4 text-lg font-semibold text-[var(--ink)] shadow-sm hover:bg-[rgba(255,252,246,1)] disabled:cursor-not-allowed disabled:opacity-60"
               >
@@ -638,6 +683,60 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {showDownloadPasswordModal && (
+        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/45 px-4 py-4 backdrop-blur-sm sm:items-center">
+          <div className="w-full max-w-md rounded-[28px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.98)] p-6 shadow-2xl sm:p-8">
+            <div className="mb-5 text-center">
+              <div className="section-kicker mx-auto mb-3 w-fit">Accesso riservato</div>
+              <h3 className="ink-title text-2xl font-playfair font-bold sm:text-3xl">Scarica le foto</h3>
+              <p className="paper-note mt-3 text-sm leading-relaxed sm:text-base">
+                Inserisci la password per avviare il download dell&apos;archivio ZIP.
+              </p>
+            </div>
+
+            <form onSubmit={handleDownloadPasswordSubmit} className="space-y-4">
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-[var(--ink)]">Password</label>
+                <input
+                  type="password"
+                  value={downloadPassword}
+                  onChange={(event) => {
+                    setDownloadPassword(event.target.value);
+                    setDownloadPasswordError('');
+                  }}
+                  className="paper-input text-base"
+                  placeholder="Inserisci la password"
+                  autoComplete="current-password"
+                  autoFocus
+                />
+              </div>
+
+              {downloadPasswordError && (
+                <p className="text-sm font-medium text-red-600">{downloadPasswordError}</p>
+              )}
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={closeDownloadPasswordModal}
+                  disabled={isDownloading}
+                  className="rounded-full border border-[rgba(181,150,92,0.3)] bg-white px-5 py-3 font-semibold text-[var(--ink)] disabled:opacity-60"
+                >
+                  Annulla
+                </button>
+                <button
+                  type="submit"
+                  disabled={isDownloading}
+                  className="wax-button flex-1 rounded-full px-5 py-3 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isDownloading ? 'Verifica in corso...' : 'Sblocca download'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="footer-stationery py-12 text-center text-white">

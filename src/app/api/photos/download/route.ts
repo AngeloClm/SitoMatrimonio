@@ -2,11 +2,17 @@ import JSZip from "jszip";
 import { createClient } from "@supabase/supabase-js";
 
 export const runtime = "nodejs";
+const PHOTO_DOWNLOAD_PASSWORD = "Mat20092026";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const incomingPassword = request.headers.get("x-photo-password");
   const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const supabaseBucket = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || "wedding-photos";
+
+  if (incomingPassword !== PHOTO_DOWNLOAD_PASSWORD) {
+    return new Response("Password non valida.", { status: 401 });
+  }
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     return new Response(
