@@ -492,7 +492,7 @@ export default function Home() {
           </h1>
           
           {/* Hero Photo Collage */}
-          <div className="mt-12 relative mx-auto" style={{width: '420px', height: '500px'}}>
+          <div className="mt-12 relative mx-auto" style={{width: '460px', height: '540px'}}>
             {/* Foto 1 - centro, leggermente ruotata a sinistra */}
             <div className="absolute bg-white p-3 shadow-2xl" style={{width: '220px', top: '30px', left: '50%', transform: 'translateX(-50%) rotate(-3deg)', zIndex: 5}}>
               <Image src="/Prima Foto Prova.jpeg" alt="Angelo e Giovanna" width={200} height={250} className="object-cover w-full" style={{height: '200px'}} priority />
@@ -517,9 +517,17 @@ export default function Home() {
             <div className="absolute bg-white p-3 shadow-2xl" style={{width: '200px', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', zIndex: 6}}>
               <Image src="/Sesta Foto.jpeg" alt="Angelo e Giovanna" width={180} height={220} className="object-cover w-full" style={{height: '185px'}} />
             </div>
-            {/* Foto 7 - centro alto sovrapposta */}
-            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '180px', top: '120px', left: '50%', transform: 'translateX(-50%) rotate(-1deg)', zIndex: 7}}>
+            {/* Foto 7 - ora a destra centrale */}
+            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '170px', top: '175px', right: '-6px', transform: 'rotate(7deg)', zIndex: 7}}>
               <Image src="/Settima Foto.jpeg" alt="Angelo e Giovanna" width={160} height={190} className="object-cover w-full" style={{height: '160px'}} />
+            </div>
+            {/* Foto 8 - lato sinistro centrale */}
+            <div className="absolute bg-white p-3 shadow-xl" style={{width: '170px', top: '185px', left: '-6px', transform: 'rotate(-8deg)', zIndex: 2}}>
+              <Image src="/WhatsApp Image 2026-05-25 at 15.21.33.jpeg" alt="Angelo e Giovanna" width={150} height={180} className="object-cover w-full" style={{height: '150px'}} />
+            </div>
+            {/* Foto 9 - ora al centro alto sovrapposta */}
+            <div className="absolute bg-white p-3 shadow-xl" style={{width: '180px', top: '120px', left: '50%', transform: 'translateX(-50%) rotate(-1deg)', zIndex: 8}}>
+              <Image src="/WhatsApp Image 2026-05-25 at 15.22.36.jpeg" alt="Angelo e Giovanna" width={150} height={180} className="object-cover w-full" style={{height: '150px'}} />
             </div>
           </div>
         </div>
@@ -593,36 +601,38 @@ export default function Home() {
 
 
 
-      {/* Codice di abbigliamento */}
-      <section className="letter-section py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="section-kicker mx-auto mb-4 w-fit">Etichetta</div>
-          <h2 className="ink-title text-4xl font-playfair mb-12 font-bold">Codice di abbigliamento</h2>
-          
-          <div className="letter-card letter-card-ornate rounded-[30px] p-8 shadow-lg md:p-10">
-            <div className="mb-6 flex justify-center">
-              <div className="wax-seal">AG</div>
-            </div>
-            <p className="paper-note text-lg mb-6">
-              La vostra presenza è la cosa più importante per noi!
-            </p>
-            <p className="paper-note text-lg mb-6">
-              Ma vi saremo molto grati se sosterrete lo schema dei colori del nostro matrimonio!
-            </p>
+      {/* Codice di abbigliamento (temporaneamente nascosto) */}
+      {false && (
+        <section className="letter-section py-20 px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="section-kicker mx-auto mb-4 w-fit">Etichetta</div>
+            <h2 className="ink-title text-4xl font-playfair mb-12 font-bold">Codice di abbigliamento</h2>
             
-            <div className="grid md:grid-cols-2 gap-8 mt-8">
-              <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
-                <h4 className="script-heading text-3xl mb-3">Per le donne</h4>
-                <p className="paper-note">Colori sui toni del rosa, bordeaux, champagne</p>
+            <div className="letter-card letter-card-ornate rounded-[30px] p-8 shadow-lg md:p-10">
+              <div className="mb-6 flex justify-center">
+                <div className="wax-seal">AG</div>
               </div>
-              <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
-                <h4 className="script-heading text-3xl mb-3">Per gli uomini</h4>
-                <p className="paper-note">Camicia bianca, pantaloni/giacca scuri</p>
+              <p className="paper-note text-lg mb-6">
+                La vostra presenza è la cosa più importante per noi!
+              </p>
+              <p className="paper-note text-lg mb-6">
+                Ma vi saremo molto grati se sosterrete lo schema dei colori del nostro matrimonio!
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-8 mt-8">
+                <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
+                  <h4 className="script-heading text-3xl mb-3">Per le donne</h4>
+                  <p className="paper-note">Colori sui toni del rosa, bordeaux, champagne</p>
+                </div>
+                <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
+                  <h4 className="script-heading text-3xl mb-3">Per gli uomini</h4>
+                  <p className="paper-note">Camicia bianca, pantaloni/giacca scuri</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Countdown */}
       <section className="px-4 py-16">
