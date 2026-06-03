@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import emailjs from '@emailjs/browser';
 import { createClient } from "@supabase/supabase-js";
-import { saveAs } from "file-saver";
 
 // Componente per il form RSVP
 function RSVPForm() {
@@ -87,14 +86,14 @@ function RSVPForm() {
       
       {showError && (
         <div className="mb-6 rounded-2xl border border-red-300 bg-red-50 px-5 py-4 text-red-700">
-          ❌ Errore nell'invio. Riprova tra qualche minuto o contattaci direttamente.
+          ❌ Errore nell&apos;invio. Riprova tra qualche minuto o contattaci direttamente.
         </div>
       )}
       
       <div className="mb-8 text-center">
         <div className="section-kicker mx-auto mb-4 w-fit">Risposta gradita</div>
         <p className="paper-note text-lg leading-relaxed">
-        Non vediamo l'ora di vedervi! Se hai specifiche restrizioni dietetiche, 
+        Non vediamo l&apos;ora di vedervi! Se hai specifiche restrizioni dietetiche, 
         assicurati che sia indicato di seguito. Si prega di rispondere entro il <strong>20 Giugno 2026</strong>
         </p>
       </div>
@@ -190,10 +189,10 @@ function RSVPForm() {
 }
 
 export default function Home() {
+  // Accesso iniziale temporaneamente disattivato.
+  // Per ripristinare subito il popup di ingresso, riusa la password del vecchio controllo:
+  // const SITE_ACCESS_PASSWORD = 'Politano01.';
   const [ibanCopied, setIbanCopied] = useState(false);
-  const [isSiteUnlocked, setIsSiteUnlocked] = useState(false);
-  const [sitePassword, setSitePassword] = useState('');
-  const [sitePasswordError, setSitePasswordError] = useState('');
 
   const handleCopyIban = () => {
     navigator.clipboard.writeText('IT34Z0306975374100000008510');
@@ -201,51 +200,18 @@ export default function Home() {
     setTimeout(() => setIbanCopied(false), 2500);
   };
 
-  const SITE_ACCESS_PASSWORD = 'Politano01.';
-
-  useEffect(() => {
-    const savedAccess = window.sessionStorage.getItem('matrimonio-site-unlocked');
-
-    if (savedAccess === 'true') {
-      setIsSiteUnlocked(true);
-    }
-  }, []);
-
-  const handleSitePasswordSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (sitePassword.trim() !== SITE_ACCESS_PASSWORD) {
-      setSitePasswordError('Password errata. Riprova.');
-      return;
-    }
-
-    window.sessionStorage.setItem('matrimonio-site-unlocked', 'true');
-    setIsSiteUnlocked(true);
-    setSitePassword('');
-    setSitePasswordError('');
-  };
-
   const [isUploading, setIsUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState('');
   const [uploadError, setUploadError] = useState('');
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [downloadMessage, setDownloadMessage] = useState('');
-  const [downloadError, setDownloadError] = useState('');
-  const [showDownloadPasswordModal, setShowDownloadPasswordModal] = useState(false);
-  const [downloadPassword, setDownloadPassword] = useState('');
-  const [downloadPasswordError, setDownloadPasswordError] = useState('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const supabaseBucket = process.env.NEXT_PUBLIC_SUPABASE_BUCKET || 'wedding-photos';
 
-  const supabase = useMemo(
-    () => (supabaseUrl && supabaseAnonKey
-      ? createClient(supabaseUrl, supabaseAnonKey)
-      : null),
-    [supabaseUrl, supabaseAnonKey],
-  );
+  const supabase = supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null;
 
   const handleUploadClick = () => {
     if (!supabase) {
@@ -257,22 +223,6 @@ export default function Home() {
     setUploadError('');
     setUploadMessage('');
     fileInputRef.current?.click();
-  };
-
-  const openDownloadPasswordModal = () => {
-    setDownloadPassword('');
-    setDownloadPasswordError('');
-    setShowDownloadPasswordModal(true);
-  };
-
-  const closeDownloadPasswordModal = () => {
-    if (isDownloading) {
-      return;
-    }
-
-    setShowDownloadPasswordModal(false);
-    setDownloadPassword('');
-    setDownloadPasswordError('');
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -318,129 +268,6 @@ export default function Home() {
       e.target.value = '';
     }
   };
-
-  const handleDownloadAllPhotos = async (enteredPassword: string) => {
-    if (!supabase) {
-      setDownloadError('Configura Supabase (.env.local) prima di scaricare le foto.');
-      setDownloadMessage('');
-      return false;
-    }
-
-    if (!enteredPassword) {
-      setDownloadPasswordError('Inserisci la password.');
-      return false;
-    }
-
-    setIsDownloading(true);
-    setDownloadError('');
-    setDownloadMessage('Preparazione archivio foto in corso...');
-
-    try {
-      const response = await fetch('/api/photos/download', {
-        headers: {
-          'x-photo-password': enteredPassword,
-        },
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        if (response.status === 401) {
-          throw new Error('Password non valida.');
-        }
-        throw new Error(errorText || 'Impossibile scaricare le foto.');
-      }
-
-      const blob = await response.blob();
-
-      if (blob.size === 0) {
-        setDownloadMessage('Non ci sono foto da scaricare al momento.');
-        return;
-      }
-
-      const dateStamp = new Date().toISOString().slice(0, 10);
-      saveAs(blob, `foto-matrimonio-${dateStamp}.zip`);
-
-      setDownloadMessage('Download avviato: archivio ZIP pronto.');
-      return true;
-    } catch (error) {
-      console.error('Errore download foto:', error);
-      setDownloadError(error instanceof Error && error.message === 'Password non valida.'
-        ? 'Password errata. Riprova.'
-        : 'Errore durante la preparazione del download.');
-      setDownloadMessage('');
-      return false;
-    } finally {
-      setIsDownloading(false);
-    }
-  };
-
-  const handleDownloadPasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const success = await handleDownloadAllPhotos(downloadPassword.trim());
-
-    if (success) {
-      closeDownloadPasswordModal();
-    }
-  };
-
-  if (!isSiteUnlocked) {
-    return (
-      <div className="stationery-page relative flex min-h-screen items-center justify-center px-4 py-8 text-[var(--ink)]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(191,158,99,0.18),transparent_34%),linear-gradient(180deg,#f8f0e4_0%,#efe0ca_100%)]" />
-
-        <div className="relative z-10 w-full max-w-md rounded-[30px] border border-[rgba(181,150,92,0.2)] bg-[rgba(255,251,244,0.97)] p-6 shadow-2xl sm:p-8">
-          <div className="mb-5 flex justify-center">
-            <Image
-              src="/Logo.jpeg"
-              alt="Logo matrimonio"
-              width={92}
-              height={92}
-              className="h-20 w-20 rounded-full object-cover bg-white p-1 shadow-lg ring-2 ring-white/80"
-              priority
-            />
-          </div>
-
-          <div className="mb-6 text-center">
-            <div className="section-kicker mx-auto mb-3 w-fit">Accesso riservato</div>
-            <h1 className="ink-title text-3xl font-playfair font-bold sm:text-4xl">Angelo & Giovanna</h1>
-            <p className="paper-note mt-3 text-sm leading-relaxed sm:text-base">
-              Inserisci la password per entrare nel sito.
-            </p>
-          </div>
-
-          <form onSubmit={handleSitePasswordSubmit} className="space-y-4">
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-[var(--ink)]">Password</label>
-              <input
-                type="password"
-                value={sitePassword}
-                onChange={(event) => {
-                  setSitePassword(event.target.value);
-                  setSitePasswordError('');
-                }}
-                className="paper-input text-base"
-                placeholder="Inserisci la password"
-                autoComplete="current-password"
-                autoFocus
-              />
-            </div>
-
-            {sitePasswordError && (
-              <p className="text-sm font-medium text-red-600">{sitePasswordError}</p>
-            )}
-
-            <button
-              type="submit"
-              className="wax-button w-full rounded-full px-6 py-3 font-semibold text-white"
-            >
-              Entra nel sito
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="stationery-page min-h-screen text-[var(--ink)]">
@@ -492,7 +319,7 @@ export default function Home() {
           </h1>
           
           {/* Hero Photo Collage */}
-          <div className="mt-12 relative mx-auto" style={{width: '460px', height: '540px'}}>
+          <div className="mt-12 relative mx-auto" style={{width: '420px', height: '500px'}}>
             {/* Foto 1 - centro, leggermente ruotata a sinistra */}
             <div className="absolute bg-white p-3 shadow-2xl" style={{width: '220px', top: '30px', left: '50%', transform: 'translateX(-50%) rotate(-3deg)', zIndex: 5}}>
               <Image src="/Prima Foto Prova.jpeg" alt="Angelo e Giovanna" width={200} height={250} className="object-cover w-full" style={{height: '200px'}} priority />
@@ -517,17 +344,9 @@ export default function Home() {
             <div className="absolute bg-white p-3 shadow-2xl" style={{width: '200px', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', zIndex: 6}}>
               <Image src="/Sesta Foto.jpeg" alt="Angelo e Giovanna" width={180} height={220} className="object-cover w-full" style={{height: '185px'}} />
             </div>
-            {/* Foto 7 - ora a destra centrale */}
-            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '170px', top: '175px', right: '-6px', transform: 'rotate(7deg)', zIndex: 7}}>
+            {/* Foto 7 - centro alto sovrapposta */}
+            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '180px', top: '120px', left: '50%', transform: 'translateX(-50%) rotate(-1deg)', zIndex: 7}}>
               <Image src="/Settima Foto.jpeg" alt="Angelo e Giovanna" width={160} height={190} className="object-cover w-full" style={{height: '160px'}} />
-            </div>
-            {/* Foto 8 - lato sinistro centrale */}
-            <div className="absolute bg-white p-3 shadow-xl" style={{width: '170px', top: '185px', left: '-6px', transform: 'rotate(-8deg)', zIndex: 2}}>
-              <Image src="/WhatsApp Image 2026-05-25 at 15.21.33.jpeg" alt="Angelo e Giovanna" width={150} height={180} className="object-cover w-full" style={{height: '150px'}} />
-            </div>
-            {/* Foto 9 - ora al centro alto sovrapposta */}
-            <div className="absolute bg-white p-3 shadow-xl" style={{width: '180px', top: '120px', left: '50%', transform: 'translateX(-50%) rotate(-1deg)', zIndex: 8}}>
-              <Image src="/WhatsApp Image 2026-05-25 at 15.22.36.jpeg" alt="Angelo e Giovanna" width={150} height={180} className="object-cover w-full" style={{height: '150px'}} />
             </div>
           </div>
         </div>
@@ -601,38 +420,36 @@ export default function Home() {
 
 
 
-      {/* Codice di abbigliamento (temporaneamente nascosto) */}
-      {false && (
-        <section className="letter-section py-20 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="section-kicker mx-auto mb-4 w-fit">Etichetta</div>
-            <h2 className="ink-title text-4xl font-playfair mb-12 font-bold">Codice di abbigliamento</h2>
+      {/* Codice di abbigliamento */}
+      <section className="letter-section py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="section-kicker mx-auto mb-4 w-fit">Etichetta</div>
+          <h2 className="ink-title text-4xl font-playfair mb-12 font-bold">Codice di abbigliamento</h2>
+          
+          <div className="letter-card letter-card-ornate rounded-[30px] p-8 shadow-lg md:p-10">
+            <div className="mb-6 flex justify-center">
+              <div className="wax-seal">AG</div>
+            </div>
+            <p className="paper-note text-lg mb-6">
+              La vostra presenza è la cosa più importante per noi!
+            </p>
+            <p className="paper-note text-lg mb-6">
+              Ma vi saremo molto grati se sosterrete lo schema dei colori del nostro matrimonio!
+            </p>
             
-            <div className="letter-card letter-card-ornate rounded-[30px] p-8 shadow-lg md:p-10">
-              <div className="mb-6 flex justify-center">
-                <div className="wax-seal">AG</div>
+            <div className="grid md:grid-cols-2 gap-8 mt-8">
+              <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
+                <h4 className="script-heading text-3xl mb-3">Per le donne</h4>
+                <p className="paper-note">Colori sui toni del rosa, bordeaux, champagne</p>
               </div>
-              <p className="paper-note text-lg mb-6">
-                La vostra presenza è la cosa più importante per noi!
-              </p>
-              <p className="paper-note text-lg mb-6">
-                Ma vi saremo molto grati se sosterrete lo schema dei colori del nostro matrimonio!
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-8 mt-8">
-                <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
-                  <h4 className="script-heading text-3xl mb-3">Per le donne</h4>
-                  <p className="paper-note">Colori sui toni del rosa, bordeaux, champagne</p>
-                </div>
-                <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
-                  <h4 className="script-heading text-3xl mb-3">Per gli uomini</h4>
-                  <p className="paper-note">Camicia bianca, pantaloni/giacca scuri</p>
-                </div>
+              <div className="rounded-[24px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.7)] p-6">
+                <h4 className="script-heading text-3xl mb-3">Per gli uomini</h4>
+                <p className="paper-note">Camicia bianca, pantaloni/giacca scuri</p>
               </div>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Countdown */}
       <section className="px-4 py-16">
@@ -733,16 +550,6 @@ export default function Home() {
                 {isUploading ? 'Caricamento in corso...' : 'Carica le tue foto'}
               </button>
 
-              <button
-                type="button"
-                onClick={openDownloadPasswordModal}
-                disabled={isDownloading}
-                className="mt-4 flex items-center gap-3 rounded-full border border-[rgba(181,150,92,0.4)] bg-[rgba(255,252,246,0.9)] px-8 py-4 text-lg font-semibold text-[var(--ink)] shadow-sm hover:bg-[rgba(255,252,246,1)] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <span className="text-2xl">⬇️</span>
-                {isDownloading ? 'Download in corso...' : 'Scarica tutte le foto'}
-              </button>
-
               <input
                 ref={fileInputRef}
                 type="file"
@@ -760,14 +567,6 @@ export default function Home() {
                 <p className="mt-4 text-center font-medium text-red-600">{uploadError}</p>
               )}
 
-              {downloadMessage && (
-                <p className="mt-3 text-center font-medium text-green-700">{downloadMessage}</p>
-              )}
-
-              {downloadError && (
-                <p className="mt-3 text-center font-medium text-red-600">{downloadError}</p>
-              )}
-
               <div className="mt-8 text-center">
                 <p className="paper-note mb-2">Usa l&apos;hashtag sui social:</p>
                 <span className="inline-block rounded-full border border-[rgba(181,150,92,0.22)] bg-[rgba(255,251,244,0.88)] px-4 py-2 font-semibold text-[var(--rose-antique)]">#AngeloEGiovanna2026</span>
@@ -778,60 +577,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {showDownloadPasswordModal && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/45 px-4 py-4 backdrop-blur-sm sm:items-center">
-          <div className="w-full max-w-md rounded-[28px] border border-[rgba(181,150,92,0.18)] bg-[rgba(255,251,244,0.98)] p-6 shadow-2xl sm:p-8">
-            <div className="mb-5 text-center">
-              <div className="section-kicker mx-auto mb-3 w-fit">Accesso riservato</div>
-              <h3 className="ink-title text-2xl font-playfair font-bold sm:text-3xl">Scarica le foto</h3>
-              <p className="paper-note mt-3 text-sm leading-relaxed sm:text-base">
-                Inserisci la password per avviare il download dell&apos;archivio ZIP.
-              </p>
-            </div>
-
-            <form onSubmit={handleDownloadPasswordSubmit} className="space-y-4">
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-[var(--ink)]">Password</label>
-                <input
-                  type="password"
-                  value={downloadPassword}
-                  onChange={(event) => {
-                    setDownloadPassword(event.target.value);
-                    setDownloadPasswordError('');
-                  }}
-                  className="paper-input text-base"
-                  placeholder="Inserisci la password"
-                  autoComplete="current-password"
-                  autoFocus
-                />
-              </div>
-
-              {downloadPasswordError && (
-                <p className="text-sm font-medium text-red-600">{downloadPasswordError}</p>
-              )}
-
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={closeDownloadPasswordModal}
-                  disabled={isDownloading}
-                  className="rounded-full border border-[rgba(181,150,92,0.3)] bg-white px-5 py-3 font-semibold text-[var(--ink)] disabled:opacity-60"
-                >
-                  Annulla
-                </button>
-                <button
-                  type="submit"
-                  disabled={isDownloading}
-                  className="wax-button flex-1 rounded-full px-5 py-3 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {isDownloading ? 'Verifica in corso...' : 'Sblocca download'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
 
       {/* Footer */}
       <footer className="footer-stationery py-12 text-center text-white">
