@@ -418,9 +418,7 @@ export default function Home() {
         </div>
       </section>
 
-
-
-      {/* Codice di abbigliamento */}
+      {/* Codice di abbigliamento nascosto temporaneamente.
       <section className="letter-section py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="section-kicker mx-auto mb-4 w-fit">Etichetta</div>
@@ -449,7 +447,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Countdown */}
       <section className="px-4 py-16">
