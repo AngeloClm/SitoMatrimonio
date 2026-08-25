@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import emailjs from '@emailjs/browser';
 import { createClient } from "@supabase/supabase-js";
 
@@ -193,6 +193,27 @@ export default function Home() {
   // Per ripristinare subito il popup di ingresso, riusa la password del vecchio controllo:
   // const SITE_ACCESS_PASSWORD = 'Politano01.';
   const [ibanCopied, setIbanCopied] = useState(false);
+  const [daysUntilWedding, setDaysUntilWedding] = useState<number | null>(null);
+
+  useEffect(() => {
+    const weddingDate = new Date(2026, 8, 20);
+    const millisecondsPerDay = 1000 * 60 * 60 * 24;
+    const updateCountdown = () => {
+      const today = new Date();
+      const todayAtMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const daysRemaining = Math.max(
+        0,
+        Math.ceil((weddingDate.getTime() - todayAtMidnight.getTime()) / millisecondsPerDay)
+      );
+
+      setDaysUntilWedding(daysRemaining);
+    };
+
+    updateCountdown();
+    const countdownInterval = window.setInterval(updateCountdown, millisecondsPerDay);
+
+    return () => window.clearInterval(countdownInterval);
+  }, []);
 
   const handleCopyIban = () => {
     navigator.clipboard.writeText('IT34Z0306975374100000008510');
@@ -455,7 +476,7 @@ export default function Home() {
           <div className="letter-card rounded-[30px] px-8 py-10 md:px-12">
             <div className="section-kicker mx-auto mb-4 w-fit">Save The Date</div>
             <h2 className="ink-title text-3xl font-playfair mb-4 font-bold">Mancano solo...</h2>
-            <div className="script-heading text-7xl md:text-8xl leading-none mb-2">143</div>
+            <div className="script-heading text-7xl md:text-8xl leading-none mb-2">{daysUntilWedding ?? '...'}</div>
             <p className="ink-title text-xl">giorni al matrimonio!</p>
             <p className="paper-note text-lg mt-4">Salva la data: 20 settembre 2026</p>
           </div>
