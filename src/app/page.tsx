@@ -420,19 +420,23 @@ export default function Home() {
             <div className="paper-divider mb-8" />
             <div className="max-w-none text-lg leading-relaxed text-[var(--ink-soft)] space-y-6 text-center md:text-left">
             <p>
-              La nostra storia è iniziata 12 anni fa, a Cervinara, in un momento semplice che si è trasformato in qualcosa di straordinario. I nostri sguardi si sono incontrati e, quasi senza accorgercene, tutto il resto ha iniziato a svanire. Quella scintilla è diventata una conversazione senza fine, fatta di risate, emozioni e della sorprendente sensazione di esserci sempre conosciuti.
+              *La nostra storia è iniziata 12 anni fa, a Cervinara. Uno sguardo, una conversazione che non si è più fermata, e la strana sensazione di conoscerci già da sempre.*
             </p>
             
             <p>
-             Da quel giorno, le nostre vite hanno iniziato a intrecciarsi in un viaggio lungo dodici anni. Abbiamo condiviso sogni, scoperto il mondo insieme, collezionato ricordi e imparato, passo dopo passo, che casa non è un luogo, ma il modo in cui ci sentiamo quando siamo l’uno accanto all’altra.
+              *Da allora le nostre vite si sono intrecciate: viaggi, scoperte, ricordi accumulati anno dopo anno. Abbiamo capito, strada facendo, che casa non è un posto ma la persona con cui la costruisci.*
             </p>
             
             <p>
-              A dicembre 2025 abbiamo scelto di fare un passo in più, promettendoci un futuro ancora più grande. Oggi siamo più di una coppia: siamo migliori amici, complici, e partner in ogni avventura.
+              *A Gennaio 2026 abbiamo deciso di fare il passo successivo. Oggi siamo compagni di vita, prima ancora che una coppia.*
             </p>
             
-            <p className="script-heading text-center text-3xl md:text-4xl leading-tight">
-             E ora, con il cuore pieno di tutto ciò che siamo stati e di tutto ciò che saremo, siamo pronti a iniziare il nostro prossimo capitolo: quello che, a settembre, ci porterà a dire “per sempre”.
+            <p>
+              *A settembre arriva il capitolo che aspettavamo: il nostro "per sempre".*
+            </p>
+            
+            <p>
+              *Grazie di cuore a chi sarà con noi in questo giorno — la vostra presenza è il regalo più bello che potessimo desiderare.*
             </p>
             </div>
             <div className="paper-divider mt-8" />
