@@ -310,7 +310,7 @@ export default function Home() {
               <li><a href="#matrimonio" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Matrimonio</a></li>
               <li><a href="#storia" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">La nostra storia</a></li>
               <li><a href="#rsvp" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">RSVP</a></li>
-              <li><a href="#regalo" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Regalo</a></li>
+              {/* <li><a href="#regalo" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Regalo</a></li> */}
               <li><a href="#foto" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Foto</a></li>
             </ul>
 
@@ -341,17 +341,17 @@ export default function Home() {
           
           {/* Hero Photo Collage */}
           <div className="mt-12 relative mx-auto" style={{width: '420px', height: '500px'}}>
-            {/* Foto 1 - centro, leggermente ruotata a sinistra */}
+            {/* Foto centrale - Foto promessa */}
             <div className="absolute bg-white p-3 shadow-2xl" style={{width: '220px', top: '30px', left: '50%', transform: 'translateX(-50%) rotate(-3deg)', zIndex: 5}}>
-              <Image src="/Prima Foto Prova.jpeg" alt="Angelo e Giovanna" width={200} height={250} className="object-cover w-full" style={{height: '200px'}} priority />
+              <Image src="/Foto promessa.jpeg" alt="Foto promessa" width={200} height={250} className="object-cover w-full" style={{height: '200px'}} priority />
             </div>
             {/* Foto 2 - sinistra in alto */}
             <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', top: '0px', left: '0px', transform: 'rotate(-6deg)', zIndex: 3}}>
-              <Image src="/Seconda Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+              <Image src="/Sesta Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
             </div>
             {/* Foto 3 - destra in alto */}
             <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', top: '10px', right: '0px', transform: 'rotate(5deg)', zIndex: 3}}>
-              <Image src="/Terza Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+              <Image src="/Seconda Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
             </div>
             {/* Foto 4 - sinistra in basso */}
             <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', bottom: '20px', left: '10px', transform: 'rotate(4deg)', zIndex: 4}}>
@@ -359,15 +359,15 @@ export default function Home() {
             </div>
             {/* Foto 5 - destra in basso */}
             <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', bottom: '10px', right: '10px', transform: 'rotate(-5deg)', zIndex: 4}}>
-              <Image src="/QuintaFoto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+              <Image src="/Foto Scale.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
             </div>
             {/* Foto 6 - centro basso */}
             <div className="absolute bg-white p-3 shadow-2xl" style={{width: '200px', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', zIndex: 6}}>
-              <Image src="/Sesta Foto.jpeg" alt="Angelo e Giovanna" width={180} height={220} className="object-cover w-full" style={{height: '185px'}} />
+              <Image src="/Terza Foto.jpeg" alt="Angelo e Giovanna" width={180} height={220} className="object-cover w-full" style={{height: '185px'}} />
             </div>
             {/* Foto 7 - centro alto sovrapposta */}
             <div className="absolute bg-white p-3 shadow-2xl" style={{width: '180px', top: '120px', left: '50%', transform: 'translateX(-50%) rotate(-1deg)', zIndex: 7}}>
-              <Image src="/Settima Foto.jpeg" alt="Angelo e Giovanna" width={160} height={190} className="object-cover w-full" style={{height: '160px'}} />
+              <Image src="/Prima Foto Prova.jpeg" alt="Angelo e Giovanna" width={160} height={190} className="object-cover w-full" style={{height: '160px'}} />
             </div>
           </div>
         </div>
@@ -493,7 +493,8 @@ export default function Home() {
       </section>
 
       {/* Foto Section */}
-      {/* Regalo Section */}
+      {/* Regalo Section - temporaneamente nascosto */}
+      {/*
       <section id="regalo" className="letter-section py-20 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <div className="section-kicker mx-auto mb-4 w-fit">Un dono per noi</div>
@@ -541,6 +542,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Foto Section */}
       <section id="foto" className="letter-section py-20 px-4">
@@ -603,7 +605,7 @@ export default function Home() {
           <div className="section-kicker mx-auto mb-4 w-fit text-[rgba(244,226,194,0.75)]">Con affetto</div>
           <h3 className="mb-4 text-2xl font-playfair">Angelo & Giovanna</h3>
           <p className="mb-4">20 Settembre 2026</p>
-          <p className="text-[rgba(244,226,194,0.8)]">Grazie per essere parte del nostro giorno speciale! 💕</p>
+          <p className="text-[rgba(244,226,194,0.8)]">Grazie per far parte del nostro giorno speciale! 💕</p>
         </div>
       </footer>
     </div>
