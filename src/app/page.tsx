@@ -341,33 +341,34 @@ export default function Home() {
           
           {/* Hero Photo Collage */}
           <div className="mt-12 relative mx-auto" style={{width: '420px', height: '500px'}}>
-            {/* Foto centrale - Foto promessa */}
-            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '220px', top: '30px', left: '50%', transform: 'translateX(-50%) rotate(-3deg)', zIndex: 5}}>
-              <Image src="/Foto promessa.jpeg" alt="Foto promessa" width={200} height={250} className="object-cover w-full" style={{height: '200px'}} priority />
+            {/* Foto principale - promessa in primo piano */}
+            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '240px', top: '36px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)', zIndex: 10}}>
+              <Image src="/Foto promessa.jpeg" alt="Foto promessa" width={220} height={270} className="object-cover w-full" style={{height: '240px'}} priority />
             </div>
-            {/* Foto 2 - sinistra in alto */}
-            <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', top: '0px', left: '0px', transform: 'rotate(-6deg)', zIndex: 3}}>
-              <Image src="/Sesta Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+
+            {/* Foto laterale in alto sinistra */}
+            <div className="absolute bg-white p-2.5 shadow-xl" style={{width: '170px', top: '0px', left: '12px', transform: 'rotate(-8deg)', zIndex: 3}}>
+              <Image src="/Sesta Foto.jpeg" alt="Angelo e Giovanna" width={150} height={180} className="object-cover w-full" style={{height: '150px'}} />
             </div>
-            {/* Foto 3 - destra in alto */}
-            <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', top: '10px', right: '0px', transform: 'rotate(5deg)', zIndex: 3}}>
-              <Image src="/Seconda Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+
+            {/* Foto laterale in alto destra */}
+            <div className="absolute bg-white p-2.5 shadow-xl" style={{width: '170px', top: '14px', right: '10px', transform: 'rotate(7deg)', zIndex: 4}}>
+              <Image src="/Seconda Foto.jpeg" alt="Angelo e Giovanna" width={150} height={180} className="object-cover w-full" style={{height: '150px'}} />
             </div>
-            {/* Foto 4 - sinistra in basso */}
-            <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', bottom: '20px', left: '10px', transform: 'rotate(4deg)', zIndex: 4}}>
-              <Image src="/Quarta Foto.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+
+            {/* Foto inferiore sinistra */}
+            <div className="absolute bg-white p-2.5 shadow-xl" style={{width: '170px', bottom: '20px', left: '18px', transform: 'rotate(6deg)', zIndex: 5}}>
+              <Image src="/Prima Foto Prova.jpeg" alt="Angelo e Giovanna" width={150} height={180} className="object-cover w-full" style={{height: '150px'}} />
             </div>
-            {/* Foto 5 - destra in basso */}
-            <div className="absolute bg-white p-3 shadow-xl" style={{width: '190px', bottom: '10px', right: '10px', transform: 'rotate(-5deg)', zIndex: 4}}>
-              <Image src="/Foto Scale.jpeg" alt="Angelo e Giovanna" width={170} height={200} className="object-cover w-full" style={{height: '170px'}} />
+
+            {/* Foto inferiore destra */}
+            <div className="absolute bg-white p-2.5 shadow-xl" style={{width: '170px', bottom: '16px', right: '18px', transform: 'rotate(-6deg)', zIndex: 5}}>
+              <Image src="/Foto Scale.jpeg" alt="Angelo e Giovanna" width={150} height={180} className="object-cover w-full" style={{height: '150px'}} />
             </div>
-            {/* Foto 6 - centro basso */}
-            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '200px', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', zIndex: 6}}>
-              <Image src="/Terza Foto.jpeg" alt="Angelo e Giovanna" width={180} height={220} className="object-cover w-full" style={{height: '185px'}} />
-            </div>
-            {/* Foto 7 - centro alto sovrapposta */}
-            <div className="absolute bg-white p-3 shadow-2xl" style={{width: '180px', top: '120px', left: '50%', transform: 'translateX(-50%) rotate(-1deg)', zIndex: 7}}>
-              <Image src="/Prima Foto Prova.jpeg" alt="Angelo e Giovanna" width={160} height={190} className="object-cover w-full" style={{height: '160px'}} />
+
+            {/* Foto centrale in basso */}
+            <div className="absolute bg-white p-2.5 shadow-2xl" style={{width: '180px', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', zIndex: 8}}>
+              <Image src="/WhatsApp Image 2026-05-25 at 15.21.33.jpeg" alt="Angelo e Giovanna" width={160} height={190} className="object-cover w-full" style={{height: '165px'}} />
             </div>
           </div>
         </div>
