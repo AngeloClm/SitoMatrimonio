@@ -94,7 +94,7 @@ function RSVPForm() {
         <div className="section-kicker mx-auto mb-4 w-fit">Risposta gradita</div>
         <p className="paper-note text-lg leading-relaxed">
         Non vediamo l&apos;ora di vedervi! Se hai specifiche restrizioni dietetiche, 
-        assicurati che sia indicato di seguito. Si prega di rispondere entro il <strong>20 Giugno 2026</strong>
+        assicurati che sia indicato di seguito. Si prega di rispondere entro il <strong>31 Agosto 2026</strong>
         </p>
       </div>
       
@@ -432,7 +432,7 @@ export default function Home() {
             </p>
             
             <p>
-              A settembre arriva il capitolo che aspettavamo: il nostro "per sempre".*
+              A settembre arriva il capitolo che aspettavamo: il nostro "per sempre".
             </p>
             
             <p>
@@ -610,7 +610,7 @@ export default function Home() {
           <div className="section-kicker mx-auto mb-4 w-fit text-[rgba(244,226,194,0.75)]">Con affetto</div>
           <h3 className="mb-4 text-2xl font-playfair">Angelo & Giovanna</h3>
           <p className="mb-4">20 Settembre 2026</p>
-          <p className="text-[rgba(244,226,194,0.8)]">Grazie per far parte del nostro giorno speciale! 💕</p>
+          <p className="text-[rgba(244,226,194,0.8)]">Grazie di far parte del nostro giorno speciale! 💕</p>
         </div>
       </footer>
     </div>
