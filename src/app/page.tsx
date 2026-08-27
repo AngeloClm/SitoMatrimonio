@@ -420,23 +420,23 @@ export default function Home() {
             <div className="paper-divider mb-8" />
             <div className="max-w-none text-lg leading-relaxed text-[var(--ink-soft)] space-y-6 text-center md:text-left">
             <p>
-              *La nostra storia è iniziata 12 anni fa, a Cervinara. Uno sguardo, una conversazione che non si è più fermata, e la strana sensazione di conoscerci già da sempre.*
+              La nostra storia è iniziata 12 anni fa, a Cervinara. Uno sguardo, una conversazione che non si è più fermata, e la strana sensazione di conoscerci già da sempre.
             </p>
             
             <p>
-              *Da allora le nostre vite si sono intrecciate: viaggi, scoperte, ricordi accumulati anno dopo anno. Abbiamo capito, strada facendo, che casa non è un posto ma la persona con cui la costruisci.*
+              Da allora le nostre vite si sono intrecciate: viaggi, scoperte, ricordi accumulati anno dopo anno. Abbiamo capito, strada facendo, che casa non è un posto ma la persona con cui la costruisci.
             </p>
             
             <p>
-              *A Gennaio 2026 abbiamo deciso di fare il passo successivo. Oggi siamo compagni di vita, prima ancora che una coppia.*
+              A Gennaio 2026 abbiamo deciso di fare il passo successivo. Oggi siamo compagni di vita, prima ancora che una coppia.
             </p>
             
             <p>
-              *A settembre arriva il capitolo che aspettavamo: il nostro "per sempre".*
+              A settembre arriva il capitolo che aspettavamo: il nostro "per sempre".*
             </p>
             
             <p>
-              *Grazie di cuore a chi sarà con noi in questo giorno — la vostra presenza è il regalo più bello che potessimo desiderare.*
+              Grazie di cuore a chi sarà con noi in questo giorno — la vostra presenza è il regalo più bello che potessimo desiderare.
             </p>
             </div>
             <div className="paper-divider mt-8" />
