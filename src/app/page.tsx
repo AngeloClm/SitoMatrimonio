@@ -94,7 +94,7 @@ function RSVPForm() {
         <div className="section-kicker mx-auto mb-4 w-fit">Risposta gradita</div>
         <p className="paper-note text-lg leading-relaxed">
         Non vediamo l&apos;ora di vedervi! Se hai specifiche restrizioni dietetiche, 
-        assicurati che sia indicato di seguito. Si prega di rispondere entro il <strong>31 Agosto 2026</strong>
+        assicurati che sia indicato di seguito.
         </p>
       </div>
       
