@@ -388,7 +388,6 @@ export default function Home() {
               <p className="text-gray-700 mb-4">Chiesa di San Potito<br/>83012 Cervinara, AV</p>
               <div className="space-y-3">
                 <a href="https://www.google.com/maps/search/?api=1&query=Chiesa%20di%20San%20Potito%2C%2083012%20Cervinara%20AV" target="_blank" rel="noopener noreferrer" className="block text-[var(--rose-antique)] hover:text-[var(--ink)] underline">Visualizza la mappa</a>
-                <a href="#" className="block text-[var(--rose-antique)] hover:text-[var(--ink)] underline">Aggiungi al calendario</a>
               </div>
             </div>
 
@@ -400,7 +399,6 @@ export default function Home() {
               <p className="text-gray-700 mb-4">Villa Regina<br/>Via Piani<br/>83035 Grottaminarda, AV</p>
               <div className="space-y-3">
                 <a href="https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUqBwgBEAAYjwIyBggAEEUYOTIHCAEQABiPAtIBCDI4NTVqMGo3qAIAsAIA&um=1&ie=UTF-8&fb=1&gl=it&sa=X&geocode=KTUoI3M7hjkTMcr7Zhr2BMhS&daddr=via+piani,+83035+Grottaminarda+V" target="_blank" className="block text-[var(--rose-antique)] hover:text-[var(--ink)] underline">Visualizza la mappa</a>
-                <a href="#" className="block text-[var(--rose-antique)] hover:text-[var(--ink)] underline">Aggiungi al calendario</a>
                 <a href="#rsvp" className="wax-button inline-block text-white px-6 py-3 rounded-full">RSVP</a>
               </div>
             </div>
