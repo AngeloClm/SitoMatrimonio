@@ -521,7 +521,7 @@ export default function Home() {
 
               <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
                 <p className="mb-1 text-xs uppercase tracking-widest text-[var(--gold)]">IBAN</p>
-                <p className="break-all text-lg font-semibold tracking-[0.08em] text-[var(--ink)]">IT34 Z03069 75374 100000008510</p>
+                <p className="break-all font-mono text-lg font-semibold tracking-[0.06em] text-[var(--ink)]">IT34 Z030 6975 3741 0000 0085 10</p>
               </div>
 
               <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
