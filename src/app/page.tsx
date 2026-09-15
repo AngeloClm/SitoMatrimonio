@@ -526,7 +526,7 @@ export default function Home() {
 
               <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
                 <p className="mb-1 text-xs uppercase tracking-widest text-[var(--gold)]">Causale suggerita</p>
-                <p className="font-medium text-[var(--ink)]">Regalo matrimonio Angelo &amp; Giovanna</p>
+                <p className="font-medium text-[var(--ink)]">Regalo matrimonio da XXXXX + dedica</p>
               </div>
             </div>
 
