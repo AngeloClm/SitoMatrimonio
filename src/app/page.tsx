@@ -310,7 +310,7 @@ export default function Home() {
               <li><a href="#matrimonio" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Matrimonio</a></li>
               <li><a href="#storia" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">La nostra storia</a></li>
               <li><a href="#rsvp" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">RSVP</a></li>
-              {/* <li><a href="#regalo" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Regalo</a></li> */}
+              <li><a href="#regalo" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Regalo</a></li>
               <li><a href="#foto" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Foto</a></li>
             </ul>
 
@@ -496,8 +496,7 @@ export default function Home() {
       </section>
 
       {/* Foto Section */}
-      {/* Regalo Section - temporaneamente nascosto */}
-      {/*
+      {/* Regalo Section */}
       <section id="regalo" className="letter-section py-20 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <div className="section-kicker mx-auto mb-4 w-fit">Un dono per noi</div>
@@ -517,7 +516,7 @@ export default function Home() {
             <div className="space-y-4 text-left">
               <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
                 <p className="mb-1 text-xs uppercase tracking-widest text-[var(--gold)]">Intestatario</p>
-                <p className="text-lg font-semibold text-[var(--ink)]">Angelo Clemente</p>
+                <p className="text-lg font-semibold text-[var(--ink)]">ANGELO CLEMENTE</p>
               </div>
 
               <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
@@ -545,8 +544,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      */}
-
       {/* Foto Section */}
       <section id="foto" className="letter-section py-20 px-4">
         <div className="max-w-4xl mx-auto">
