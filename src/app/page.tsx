@@ -192,7 +192,6 @@ export default function Home() {
   // Accesso iniziale temporaneamente disattivato.
   // Per ripristinare subito il popup di ingresso, riusa la password del vecchio controllo:
   // const SITE_ACCESS_PASSWORD = 'Politano01.';
-  const [ibanCopied, setIbanCopied] = useState(false);
   const [daysUntilWedding, setDaysUntilWedding] = useState<number | null>(null);
 
   useEffect(() => {
@@ -214,12 +213,6 @@ export default function Home() {
 
     return () => window.clearInterval(countdownInterval);
   }, []);
-
-  const handleCopyIban = () => {
-    navigator.clipboard.writeText('IT34Z0306975374100000008510');
-    setIbanCopied(true);
-    setTimeout(() => setIbanCopied(false), 2500);
-  };
 
   const [isUploading, setIsUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState('');
@@ -310,7 +303,6 @@ export default function Home() {
               <li><a href="#matrimonio" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Matrimonio</a></li>
               <li><a href="#storia" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">La nostra storia</a></li>
               <li><a href="#rsvp" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">RSVP</a></li>
-              <li><a href="#regalo" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Regalo</a></li>
               <li><a href="#foto" className="text-[var(--rose-antique)] hover:text-[var(--ink)] text-lg font-semibold transition-colors">Foto</a></li>
             </ul>
 
@@ -495,55 +487,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Foto Section */}
-      {/* Regalo Section */}
-      <section id="regalo" className="letter-section py-20 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="section-kicker mx-auto mb-4 w-fit">Un dono per noi</div>
-          <h2 className="ink-title text-4xl font-playfair mb-4 font-bold">Lista Nozze</h2>
-          <p className="paper-note text-lg mb-12 leading-relaxed">
-            La vostra presenza è il regalo più bello che potete farci.<br/>
-            Se desiderate contribuire al nostro futuro insieme, potete farlo tramite bonifico bancario.
-          </p>
-
-          <div className="letter-card letter-card-ornate rounded-[30px] p-8 shadow-xl">
-            <div className="mb-4 flex justify-center">
-              <div className="wax-seal">AG</div>
-            </div>
-            <h3 className="script-heading text-4xl mb-2">Coordinate Bancarie</h3>
-            <p className="paper-note text-sm mb-8">Per facilitarvi il gesto, trovate qui i dati per il bonifico.</p>
-
-            <div className="space-y-4 text-left">
-              <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
-                <p className="mb-1 text-xs uppercase tracking-widest text-[var(--gold)]">Intestatario</p>
-                <p className="text-lg font-semibold text-[var(--ink)]">ANGELO CLEMENTE</p>
-              </div>
-
-              <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
-                <p className="mb-1 text-xs uppercase tracking-widest text-[var(--gold)]">IBAN</p>
-                <p className="break-all font-mono text-lg font-semibold tracking-[0.04em] text-[var(--ink)]">IT34Z0306975374100000008510</p>
-              </div>
-
-              <div className="rounded-2xl border border-[rgba(181,150,92,0.18)] bg-[rgba(255,252,246,0.82)] p-4 shadow-sm">
-                <p className="mb-1 text-xs uppercase tracking-widest text-[var(--gold)]">Causale suggerita</p>
-                <p className="font-medium text-[var(--ink)]">Regalo matrimonio da XXXXX + dedica</p>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleCopyIban}
-              className="wax-button mx-auto mt-8 flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-white"
-            >
-              {ibanCopied ? (
-                <><span>✅</span> IBAN copiato!</>
-              ) : (
-                <><span>📋</span> Copia IBAN</>
-              )}
-            </button>
-          </div>
-        </div>
-      </section>
       {/* Foto Section */}
       <section id="foto" className="letter-section py-20 px-4">
         <div className="max-w-4xl mx-auto">
